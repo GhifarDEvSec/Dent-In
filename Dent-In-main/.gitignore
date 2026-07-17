@@ -1,0 +1,21 @@
+target/
+uploads/
+*.class
+*.jar
+*.war
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+.DS_Store
+
+# Environment variables (NEVER commit)
+.env
+
+# Docker
+docker-compose.override.yml
+
+# OS files
+Thumbs.db
+Desktop.ini

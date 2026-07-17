@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "vscjava.vscode-spring-boot-pack",
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-spring-initializr",
+        "vmware.vscode-spring-boot",
+        "redhat.java",
+        "naco-siren.gradle-language",
+        "GabrielBB.vscode-lombok",
+        "formulahendry.auto-rename-tag",
+        "ritwickdey.LiveServer",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client"
+    ]
+}

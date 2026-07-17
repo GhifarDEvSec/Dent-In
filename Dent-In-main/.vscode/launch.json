@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Dent-in (Spring Boot)",
+            "request": "launch",
+            "mainClass": "com.dentist.DentalClinicApplication",
+            "projectName": "dental-clinic",
+            "envFile": "${workspaceFolder}/.env",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "stopOnEntry": false
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open Browser",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}/src/main/resources/static"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run + Debug Frontend",
+            "configurations": ["Dent-in (Spring Boot)", "Open Browser"],
+            "stopAll": true
+        }
+    ]
+}

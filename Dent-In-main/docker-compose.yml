@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  dental-clinic:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - HF_API_TOKEN=${HF_API_TOKEN}
+      - POSTHOG_API_KEY=${POSTHOG_API_KEY}
+      - CORS_ORIGINS=${CORS_ORIGINS:http://localhost:3000}
+    volumes:
+      - uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  uploads:

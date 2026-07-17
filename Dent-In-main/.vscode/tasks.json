@@ -1,0 +1,91 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Maven: Build",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["compile", "-q"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "envFile": "${workspaceFolder}/.env"
+            },
+            "problemMatcher": ["$javac"],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Maven: Package",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["package", "-q", "-DskipTests"],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "envFile": "${workspaceFolder}/.env"
+            },
+            "problemMatcher": ["$javac"],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Maven: Run",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["spring-boot:run"],
+            "group": "none",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "envFile": "${workspaceFolder}/.env"
+            },
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Maven: Clean",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["clean", "-q"],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Maven: Test",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["test"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "envFile": "${workspaceFolder}/.env"
+            },
+            "problemMatcher": ["$javac"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

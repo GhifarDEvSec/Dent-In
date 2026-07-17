@@ -1,0 +1,39 @@
+{
+    // Java
+    "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.9.10-hotspot",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.gradle.enabled": false,
+
+    // Spring Boot
+    "boot-java.rewrite.reconcile": true,
+    "spring-boot.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.9.10-hotspot",
+
+    // Files
+    "files.exclude": {
+        "**/target": true,
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "files.associations": {
+        "*.env": "dotenv"
+    },
+
+    // Editor
+    "editor.tabSize": 4,
+
+    // Java debug
+    "java.debug.settings.hotCodeReplace": "automatic",
+    "java.debug.settings.enableRunDebugCodeLens": true,
+
+    // REST Client
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "baseUrl": "http://localhost:8080"
+        }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
+}

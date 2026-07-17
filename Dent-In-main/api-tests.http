@@ -1,0 +1,114 @@
+### ============================================
+### Dent-in API — REST Client Test File
+### ============================================
+### Install "REST Client" extension in VS Code.
+### Click "Send Request" above any block below.
+### ============================================
+
+### ---- HEALTH CHECK ----
+GET http://localhost:8080/api/dentists
+
+### ---- REGISTER ----
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "fullName": "Test User",
+    "email": "test@dentin.health",
+    "phone": "+62 811 9999 000",
+    "address": null,
+    "dateOfBirth": null,
+    "gender": null,
+    "emergencyContact": null,
+    "medicalHistory": null,
+    "password": "password123"
+}
+
+### ---- LOGIN ----
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+    "identifier": "test@dentin.health",
+    "password": "password123"
+}
+
+### ---- SEND OTP ----
+POST http://localhost:8080/api/otp/send
+Content-Type: application/json
+
+{
+    "email": "test@dentin.health",
+    "purpose": "register"
+}
+
+### ---- VERIFY OTP (replace CODE with 6-digit code from console) ----
+POST http://localhost:8080/api/otp/verify
+Content-Type: application/json
+
+{
+    "email": "test@dentin.health",
+    "code": "000000",
+    "purpose": "register"
+}
+
+### ---- GET PATIENTS ----
+GET http://localhost:8080/api/patients
+
+### ---- GET DENTISTS ----
+GET http://localhost:8080/api/dentists
+
+### ---- GET DENTIST BY ID ----
+GET http://localhost:8080/api/dentists/1
+
+### ---- GET ACTIVE DENTISTS ----
+GET http://localhost:8080/api/dentists/active
+
+### ---- MAP: GET API KEY ----
+GET http://localhost:8080/api/maps/api-key
+
+### ---- MAP: GET ALL LOCATIONS ----
+GET http://localhost:8080/api/maps/locations
+
+### ---- MAP: NEARBY (Jakarta) ----
+GET http://localhost:8080/api/maps/nearby?lat=-6.2088&lng=106.8456&radiusKm=10
+
+### ---- MAP: DIRECTIONS ----
+GET http://localhost:8080/api/maps/directions?lat=-6.2088&lng=106.8456
+
+### ---- CREATE APPOINTMENT ----
+POST http://localhost:8080/api/appointments
+Content-Type: application/json
+
+{
+    "patientId": 1,
+    "dentistId": 1,
+    "appointmentDate": "2026-07-20",
+    "appointmentTime": "14:30",
+    "reason": "Root canal follow-up",
+    "notes": "Booked via Dent-in"
+}
+
+### ---- GET APPOINTMENTS BY PATIENT ----
+GET http://localhost:8080/api/appointments/patient/1
+
+### ---- GET PRESCRIPTIONS BY PATIENT ----
+GET http://localhost:8080/api/prescriptions/patient/1
+
+### ---- GET NOTIFICATIONS BY PATIENT ----
+GET http://localhost:8080/api/notifications/patient/1
+
+### ---- GET UNREAD NOTIFICATION COUNT ----
+GET http://localhost:8080/api/notifications/patient/1/count
+
+### ---- GET SCANS BY PATIENT ----
+GET http://localhost:8080/api/scans/patient/1
+
+### ---- H2 CONSOLE ----
+### Open in browser: http://localhost:8080/h2-console
+### JDBC URL: jdbc:h2:mem:dentaldb
+### User: sa
+### Password: (empty)
+
+### ---- SWAGGER UI ----
+### Open in browser: http://localhost:8080/swagger-ui.html

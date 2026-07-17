@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dent-in — Smart Dental Healthcare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Dent-in: Smart dental healthcare platform. Book verified dentists, track queues in real time, get AI-assisted checks, and manage your dental health — all from one connected app.">
+</head>
+<body>
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav">
+  <a class="brand" href="#/home">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C9 3 6.5 4.8 6.5 8.2c0 2.6 1 4 1.3 6.4.3 2.3.5 5.4 2 5.4 1.6 0 1.5-4.3 2.2-4.3s.6 4.3 2.2 4.3c1.5 0 1.7-3.1 2-5.4.3-2.4 1.3-3.8 1.3-6.4C17.5 4.8 15 3 12 3Z" fill="white"/></svg>
+    </span>
+    Dent-in
+  </a>
+  <div class="nav-links" id="patientNavLinks">
+    <a href="#/home" data-route="home">Home</a>
+    <a href="#/find" data-route="find">Find a Doctor</a>
+    <a href="#/about" data-route="about">About</a>
+  </div>
+  <div class="nav-cta" data-auth-slot></div>
+</nav>
+
+<!-- ==================== VIEW: HOME (hero + dashboard) ==================== -->
+<div class="view" id="view-home">
+  <header class="hero" id="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Smart Dental Care, Simplified</div>
+        <h1>Your smile deserves a <em>smarter</em> kind of care.</h1>
+        <p class="lede">Book verified dentists, track your queue in real time, get AI-assisted checks, and never miss a follow-up — all from one calm, connected app.</p>
+        <div class="hero-actions">
+          <a href="#/find" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+            Book Appointment
+          </a>
+          <a href="#/find" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.4"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+            Consult Dentist
+          </a>
+        </div>
+        <div class="trust-row">
+          <div class="avatars"><span>A</span><span>M</span><span>R</span></div>
+          <div class="trust-text"><b>24,000+</b> patients trust Dent-in<br>for everyday dental care</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-photo">
+          <svg class="tooth-illustration" viewBox="0 0 340 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="toothGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dff3ff"/></linearGradient></defs>
+            <circle cx="180" cy="150" r="150" fill="#EAF4FF"/>
+            <circle cx="240" cy="330" r="90" fill="#DFF7EF"/>
+            <path d="M170 90c-40 0-72 24-72 66 0 34 13 52 17 84 4 30 7 70 26 70s20-56 29-56 10 56 29 56 22-40 26-70c4-32 17-50 17-84 0-42-32-66-72-66Z" fill="url(#toothGrad)" stroke="#BFE0FF" stroke-width="2"/>
+            <circle cx="140" cy="130" r="10" fill="#ffffff" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="float-card glass appt" id="heroApptCard">
+          <div class="fc-head"><div class="fc-icon" style="background:rgba(47,128,237,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg></div>
+            <div class="fc-title">Next Appointment</div></div>
+          <div class="fc-main" id="heroApptMain">Routine Dental Checkup</div><div class="fc-sub" id="heroApptSub"></div>
+        </div>
+        <div class="float-card glass reminder" id="heroMedCard">
+          <div class="fc-head"><div class="fc-icon" style="background:rgba(0,200,150,0.14);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2.2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+            <div class="fc-title">Dental Care</div></div>
+          <div class="fc-main" id="heroMedMain">Time for a check-up</div><div class="fc-sub" id="heroMedSub"></div>
+        </div>
+        <div class="float-card glass emergency">
+          <div class="fc-head"><span class="pulse-dot"></span><div class="fc-title" style="color:var(--danger);">Emergency Ready</div></div>
+          <div class="fc-main">24/7 urgent care</div><div class="fc-sub">Find nearest clinic from your location</div>
+        </div>
+        <div class="float-card glass stat">
+          <div class="fc-title">Satisfaction</div><div class="fc-main" style="font-size:22px;">98.4%</div><div class="fc-sub">from 24k reviews</div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-item"><div class="num"><span>870+</span></div><div class="label">Verified dentists</div></div>
+      <div class="stat-item"><div class="num"><span>24k+</span></div><div class="label">Patients served</div></div>
+      <div class="stat-item"><div class="num"><span>4.9</span>/5</div><div class="label">Average rating</div></div>
+      <div class="stat-item"><div class="num"><span>6 min</span></div><div class="label">Avg. queue wait</div></div>
+    </div>
+  </header>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="block" id="dashboard">
+    <div class="section-head wrap" style="padding:0;">
+      <div class="eyebrow">Product · Dashboard</div>
+      <h2>Everything about your smile, in one calm view.</h2>
+      <p>Appointments, queue status, reminders and health history — surfaced the moment you open the app, all driven by the Dent-in API.</p>
+    </div>
+
+    <div class="dash-shell" id="dashShell" style="display:none;">
+      <div class="dash-topbar" id="welcomeSection">
+        <div class="welcome">
+          <div class="pfp" id="dashPfp">--</div>
+          <div class="who"><div class="hi" id="dashGreeting">Good afternoon,</div><div class="name" id="dashName">—</div></div>
+        </div>
+        <div class="dash-actions">
+          <div class="icon-btn" id="notifBell" style="position:relative;cursor:pointer;">
+            <span class="badge" id="notifCount" style="display:none;"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          </div>
+          <div class="icon-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div>
+          <a href="tel:112" class="emergency-pill" aria-label="Call emergency number 112">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            Emergency</a>
+        </div>
+      </div>
+      <div class="dash-grid" id="dashGrid"></div>
+    </div>
+
+    <div class="logged-out-panel" id="loggedOutPanel">
+      <div class="lop-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <h3>Log in to see your dashboard</h3>
+      <p>Your appointments, queue status, reminders and dental history all live here — but we only show real data for a signed-in patient. Create an account or log in to get started.</p>
+      <div class="lop-actions">
+        <a href="#/login" class="btn btn-outline">Log in</a>
+        <a href="#/register" class="btn btn-primary">Create account</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== VIEW: FIND A DOCTOR ==================== -->
+<div class="view" id="view-find">
+  <section class="fd-hero">
+    <div class="eyebrow">Book an Appointment</div>
+    <h1>Find the right dentist for you.</h1>
+    <p>Browse specialists for a specific concern, or book a general dentist for checkups and cleanings. Every doctor here is verified and clinic-affiliated — loaded live from the Dent-in API.</p>
+  </section>
+  <div class="fd-wrap">
+    <div class="fd-controls">
+      <input class="field-input" type="text" id="searchDoc" placeholder="Search by name, specialization, or clinic…" style="flex:1;min-width:200px;">
+      <select class="field-input" id="filterType" style="width:auto;min-width:160px;">
+        <option value="">All types</option>
+        <option value="specialist">Specialist</option>
+        <option value="general">General</option>
+      </select>
+    </div>
+    <div id="mapContainer" class="fd-map-container" style="display:none;margin:0 0 24px;">
+      <div id="map" style="width:100%;height:320px;border-radius:12px;overflow:hidden;"></div>
+    </div>
+    <div class="fd-section-title">Specialists</div>
+    <div class="doc-grid" id="specialistGrid"></div>
+    <div class="fd-section-title">General Practitioners</div>
+    <div class="doc-grid" id="generalGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: LOGIN ==================== -->
+<div class="view" id="view-login">
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div class="eyebrow" id="loginEyebrow">Welcome back</div>
+        <h1 id="loginTitle">Log in to Dent-in</h1>
+        <p id="loginSub">Pick up your appointments, queue status, and dental history right where you left off.</p>
+      </div>
+
+      <div class="persona-switch" id="loginRoleSwitch" style="margin-bottom:22px; width:100%;">
+        <button type="button" class="active" data-login-role="patient" style="flex:1; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+          Patient</button>
+        <button type="button" data-login-role="professional" style="flex:1; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          Healthcare Professional</button>
+      </div>
+
+      <div class="form-banner error" id="loginBanner"></div>
+      <form id="loginForm" novalidate>
+        <div class="field-group"><label class="field-label" for="identifier" id="identifierLabel">Email or phone number</label>
+          <input class="field-input" type="text" id="identifier" placeholder="you@email.com or +62 812 3456 789" required></div>
+        <div class="field-group"><label class="field-label" for="password">Password</label>
+          <input class="field-input" type="password" id="password" placeholder="••••••••" required></div>
+        <button type="submit" class="btn btn-primary auth-submit" id="loginSubmitBtn">Log in</button>
+      </form>
+      <div class="auth-alt" id="loginAltRow">Don't have an account? <a href="#/register">Create one</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: REGISTER ==================== -->
+<div class="view" id="view-register">
+  <div class="auth-shell">
+    <div class="auth-card wide">
+      <div class="auth-head">
+        <div class="eyebrow">Join Dent-in</div>
+        <h1>Create your account</h1>
+        <p>Set up your patient profile so we can match your records to the right dentist and clinic.</p>
+      </div>
+      <div class="form-banner error" id="registerBanner"></div>
+      <form id="registerForm" novalidate>
+        <div class="field-row three">
+          <div class="field-group"><label class="field-label" for="firstName">First name</label><input class="field-input" type="text" id="firstName" required></div>
+          <div class="field-group"><label class="field-label" for="middleName">Middle name <span style="font-weight:400;">(optional)</span></label><input class="field-input" type="text" id="middleName"></div>
+          <div class="field-group"><label class="field-label" for="lastName">Last name</label><input class="field-input" type="text" id="lastName" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="dob">Date of birth</label><input class="field-input" type="date" id="dob" required></div>
+          <div class="field-group"><label class="field-label" for="gender">Gender</label>
+            <select class="field-input" id="gender" required>
+              <option value="" disabled selected>Select</option>
+              <option value="female">Female</option><option value="male">Male</option>
+              <option value="other">Other</option><option value="prefer_not">Prefer not to say</option>
+            </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="email">Email address</label><input class="field-input" type="email" id="email" required></div>
+          <div class="field-group"><label class="field-label" for="phone">Phone number</label><input class="field-input" type="tel" id="phone" placeholder="+62 812 3456 789" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="regPassword">Password</label><input class="field-input" type="password" id="regPassword" placeholder="At least 8 characters" required minlength="8"></div>
+          <div class="field-group"><label class="field-label" for="confirmPassword">Confirm password</label><input class="field-input" type="password" id="confirmPassword" required minlength="8"></div>
+        </div>
+        <div class="otp-section" id="otpSection" style="display:none;">
+          <div class="otp-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            <div><b>Verify your email</b><br><span>We sent a 6-digit code to <span id="otpEmailDisplay"></span></span></div>
+          </div>
+          <div class="otp-inputs">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]">
+            <input type="text" maxlength="1" class="otp-char" inputmode="numeric" pattern="[0-9]">
+          </div>
+          <div class="otp-actions">
+            <button type="button" class="btn btn-primary" id="verifyOtpBtn">Verify code</button>
+            <button type="button" class="btn btn-outline" id="resendOtpBtn">Resend code</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit" id="registerSubmit">Create account</button>
+      </form>
+      <div class="auth-alt">Already have an account? <a href="#/login">Log in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: ABOUT ==================== -->
+<div class="view" id="view-about">
+  <section class="fd-hero">
+    <div class="eyebrow">About Dent-in</div>
+    <h1>One connected system, from booking to diagnosis.</h1>
+    <p>Dent-in unifies the patient-facing app with a full clinical backend: patients, dentists, appointments, prescriptions, and AI-assisted teeth scans — one product, end to end.</p>
+  </section>
+  <div class="fd-wrap">
+    <div class="dash-grid">
+      <div class="card col-4"><div class="card-label">For patients</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">Register, find a verified dentist, book in seconds, track your live queue, upload photos for an AI dental check, and get prescriptions straight to your dashboard.</p></div>
+      <div class="card col-4"><div class="card-label">For clinics</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">A Spring Boot REST API manages patients, dentists, appointments with slot-conflict protection, prescriptions, and teeth-scan analysis records in one place.</p></div>
+      <div class="card col-4"><div class="card-label">AI teeth analysis</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">Upload front, left and right photos and the scanner returns a health score, detected issues, and follow-up recommendations — the same pipeline the clinic backend exposes.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: ADMIN / FASKES DASHBOARD ==================== -->
+<div class="view" id="view-admin">
+  <section class="admin-hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Clinic Console · Faskes</div>
+        <h1>Kelola pasien, janji temu, dan hasil scan dari satu tempat.</h1>
+        <p>Panel internal untuk klinik/faskes mitra Dent-in — bukan tampilan pasien. Data yang tampil di sini bersumber dari layanan yang sama (DentinAPI) yang dipakai aplikasi pasien.</p>
+      </div>
+      <div class="admin-clinic-chip">
+        <div class="acc-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        </div>
+        <div><div class="acc-name">Dent-in — Admin</div><div class="acc-role">Front office &amp; clinic staff</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="kpi-row" id="adminKpiRow"></div>
+
+  <nav class="admin-tabs" id="adminTabs">
+    <button type="button" class="admin-tab" data-admin-tab="overview">Ringkasan</button>
+    <button type="button" class="admin-tab" data-admin-tab="appointments">Janji Temu <span class="cnt" id="cntAppt">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="patients">Pasien <span class="cnt" id="cntPatients">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="dentists">Dokter <span class="cnt" id="cntDentists">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="scans">Scan AI <span class="cnt" id="cntScans">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="prescriptions">Resep <span class="cnt" id="cntPres">0</span></button>
+  </nav>
+
+  <div class="admin-panel" id="adminPanel"></div>
+</div>
+
+<footer>Dent-in — Your Smart Dental Healthcare Companion. Frontend (Dent-in) + backend (Haackathon), unified.</footer>
+
+<!-- ==================== NOTIFICATION PANEL ==================== -->
+<div class="notif-panel hidden" id="notifPanel">
+  <div class="notif-header">
+    <b>Notifications</b>
+    <button type="button" class="btn btn-outline btn-sm" id="notifMarkAll">Mark all read</button>
+  </div>
+  <div class="notif-list" id="notifList"></div>
+</div>
+
+<!-- ==================== API CONSOLE ==================== -->
+<button class="api-fab" id="apiFab" title="Show API activity">
+  <span class="dot"></span> Dent-in API <span class="cnt" id="apiCount">0</span>
+</button>
+<div class="api-drawer" id="apiDrawer">
+  <div class="adh">
+    <div><b>Live API activity</b><br><span>frontend ⇄ Haackathon backend (in-browser)</span></div>
+    <div style="display:flex;gap:6px;">
+      <button id="apiClear" title="Clear">⌫</button>
+      <button id="apiClose" title="Close">×</button>
+    </div>
+  </div>
+  <div class="api-log" id="apiLogBody"></div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dent-in — Smart Dental Healthcare (unified)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#2F80ED;
+  --primary-dark:#1B63C7;
+  --secondary:#56CCF2;
+  --accent:#00C896;
+  --accent-dark:#019a76;
+  --bg:#F7FAFC;
+  --card:#FFFFFF;
+  --success:#27AE60;
+  --warning:#F2C94C;
+  --danger:#EB5757;
+  --ink:#0E2A47;
+  --ink-soft:#5A7290;
+  --ink-faint:#93A6BD;
+  --line: rgba(47,128,237,0.10);
+  --r-lg:28px;
+  --r-md:20px;
+  --r-sm:14px;
+  --shadow-soft: 0 2px 6px rgba(20,50,90,0.04), 0 14px 34px -12px rgba(20,50,90,0.14);
+  --shadow-float: 0 8px 18px rgba(20,50,90,0.08), 0 30px 60px -18px rgba(47,128,237,0.28);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+#hero, #dashboard, #welcomeSection{scroll-margin-top:84px;}
+body{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{text-decoration:none; color:inherit;}
+button{font-family:inherit; cursor:pointer; border:none;}
+::selection{background:rgba(47,128,237,0.18);}
+
+/* ---------- Utility ---------- */
+.wrap{max-width:1280px; margin:0 auto; padding:0 40px;}
+.eyebrow{
+  font-size:12.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase;
+  color:var(--primary); display:flex; align-items:center; gap:8px;
+}
+.eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(0,200,150,0.18);}
+.glass{
+  background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.68));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* ---------- Top nav ---------- */
+.topnav{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 40px;
+  background: rgba(247,250,252,0.72);
+  backdrop-filter: blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-0.02em;}
+.brand .mark{
+  width:34px; height:34px; border-radius:11px;
+  background:linear-gradient(135deg, var(--primary), var(--secondary));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 6px 14px -4px rgba(47,128,237,0.55);
+}
+.brand .mark svg{width:19px; height:19px;}
+.nav-links{display:flex; gap:34px; font-size:14.5px; font-weight:600; color:var(--ink-soft);}
+.nav-links a{position:relative; padding:6px 0; transition:color .25s;}
+.nav-links a:hover{color:var(--primary);}
+.nav-links a::after{
+  content:''; position:absolute; left:0; bottom:0; height:2px; width:0%;
+  background:var(--primary); transition:width .25s ease;
+}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{display:flex; align-items:center; gap:14px;}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-weight:700; font-size:14.5px; padding:13px 24px; border-radius:100px;
+  transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s, background .22s;
+}
+.btn-primary{
+  background:linear-gradient(135deg, var(--primary), #4C97F0);
+  color:#fff; box-shadow: 0 10px 24px -8px rgba(47,128,237,0.55);
+}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 16px 30px -8px rgba(47,128,237,0.6);}
+.btn-outline{
+  background:#fff; color:var(--primary); border:1.5px solid var(--line);
+}
+.btn-outline:hover{border-color:var(--primary); transform:translateY(-2px); box-shadow:var(--shadow-soft);}
+.btn-mint{
+  background:linear-gradient(135deg, var(--accent), #12d9a3); color:#fff;
+  box-shadow:0 10px 24px -8px rgba(0,200,150,0.5);
+}
+.btn-mint:hover{transform:translateY(-2px);}
+.btn-ghost{background:transparent; color:var(--ink-soft); font-weight:600;}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative; padding:76px 40px 40px;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(86,204,242,0.35), transparent 60%),
+    radial-gradient(900px 500px at 10% 0%, rgba(47,128,237,0.16), transparent 55%);
+  overflow:hidden;
+}
+.hero-grid{
+  max-width:1280px; margin:0 auto;
+  display:grid; grid-template-columns:1.05fr 1fr; gap:40px; align-items:center;
+  min-height:560px;
+}
+.hero h1{
+  font-size:52px; line-height:1.08; letter-spacing:-0.025em; font-weight:800;
+  margin:18px 0 20px; color:var(--ink);
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(120deg, var(--primary), var(--accent));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p.lede{font-size:17px; color:var(--ink-soft); max-width:460px; line-height:1.65; margin-bottom:32px;}
+.hero-actions{display:flex; gap:14px; margin-bottom:40px;}
+.trust-row{display:flex; align-items:center; gap:26px;}
+.avatars{display:flex;}
+.avatars span{
+  width:38px; height:38px; border-radius:50%; border:3px solid var(--bg);
+  margin-left:-10px; display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:700; color:#fff;
+}
+.avatars span:nth-child(1){background:linear-gradient(135deg,#2F80ED,#56CCF2); margin-left:0;}
+.avatars span:nth-child(2){background:linear-gradient(135deg,#00C896,#3be2b8);}
+.avatars span:nth-child(3){background:linear-gradient(135deg,#F2994A,#F2C94C);}
+.trust-text{font-size:13.5px; color:var(--ink-soft); font-weight:600; line-height:1.4;}
+.trust-text b{color:var(--ink); font-weight:800;}
+
+/* Hero visual stage */
+.stage{position:relative; height:560px;}
+.stage-photo{
+  position:absolute; right:0; top:20px; width:340px; height:460px;
+  border-radius:32px; overflow:hidden;
+  background: linear-gradient(160deg, #eaf4ff 0%, #d9f2ec 100%);
+  box-shadow:var(--shadow-float);
+}
+.tooth-illustration{width:100%; height:100%;}
+
+.float-card{
+  position:absolute; padding:16px 18px; border-radius:20px;
+  box-shadow:var(--shadow-float);
+  animation: drift 6s ease-in-out infinite;
+}
+.float-card.appt{ left:-10px; top:40px; width:220px; animation-delay:0s;}
+.float-card.reminder{ left:-30px; bottom:120px; width:230px; animation-delay:1.4s;}
+.float-card.emergency{ right:190px; bottom:8px; width:200px; animation-delay:0.7s;}
+.float-card.stat{ right:-6px; top:-6px; width:150px; animation-delay:2s;}
+@keyframes drift{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-12px);}
+}
+.fc-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.fc-icon{width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.fc-icon svg{width:17px; height:17px;}
+.fc-title{font-size:12px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.04em;}
+.fc-main{font-size:15px; font-weight:800; color:var(--ink);}
+.fc-sub{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+.pulse-dot{width:8px; height:8px; border-radius:50%; background:var(--danger); position:relative;}
+.pulse-dot::after{
+  content:''; position:absolute; inset:-4px; border-radius:50%;
+  border:2px solid var(--danger); animation:pulse 1.6s ease-out infinite;
+}
+@keyframes pulse{0%{transform:scale(0.6); opacity:1;} 100%{transform:scale(1.8); opacity:0;}}
+
+.stats-strip{
+  max-width:1280px; margin:20px auto 0; padding:28px 40px;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  border-top:1px solid var(--line);
+}
+.stat-item .num{font-size:30px; font-weight:800; letter-spacing:-0.02em; color:var(--ink);}
+.stat-item .num span{color:var(--primary);}
+.stat-item .label{font-size:13px; color:var(--ink-soft); font-weight:600; margin-top:4px;}
+
+/* ---------- Section shell ---------- */
+section.block{padding:90px 40px;}
+.section-head{max-width:640px; margin-bottom:50px;}
+.section-head h2{font-size:34px; font-weight:800; letter-spacing:-0.02em; margin-top:14px; line-height:1.2;}
+.section-head p{color:var(--ink-soft); font-size:16px; margin-top:12px; line-height:1.6;}
+
+/* ---------- Dashboard ---------- */
+#dashboard{
+  background:
+    radial-gradient(800px 400px at 100% 0%, rgba(0,200,150,0.06), transparent 60%),
+    var(--bg);
+}
+.dash-shell{
+  max-width:1280px; margin:0 auto;
+  background:var(--card);
+  border-radius:32px;
+  box-shadow:var(--shadow-soft);
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.dash-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:26px 34px; border-bottom:1px solid var(--line);
+}
+.welcome{display:flex; align-items:center; gap:14px;}
+.welcome .pfp{
+  width:50px; height:50px; border-radius:16px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:17px;
+}
+.welcome .who .hi{font-size:13px; color:var(--ink-soft); font-weight:600;}
+.welcome .who .name{font-size:19px; font-weight:800;}
+.dash-actions{display:flex; align-items:center; gap:14px;}
+.icon-btn{
+  width:42px; height:42px; border-radius:14px; background:var(--bg); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; position:relative; transition:.2s;
+}
+.icon-btn:hover{background:#fff; box-shadow:var(--shadow-soft);}
+.icon-btn svg{width:18px; height:18px; color:var(--ink-soft);}
+.icon-btn .badge{
+  position:absolute; top:6px; right:6px; width:8px; height:8px; border-radius:50%;
+  background:var(--danger); border:2px solid #fff;
+}
+.emergency-pill{
+  display:flex; align-items:center; gap:8px; background:linear-gradient(135deg,#EB5757,#f27979);
+  color:#fff; font-weight:700; font-size:13.5px; padding:11px 18px; border-radius:100px;
+  box-shadow:0 10px 22px -8px rgba(235,87,87,0.55);
+}
+
+.dash-grid{
+  padding:30px 34px 40px;
+  display:grid; grid-template-columns:repeat(12, 1fr); gap:22px;
+}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--r-md);
+  padding:22px; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+}
+.card:hover{transform:translateY(-4px); box-shadow:var(--shadow-soft);}
+.card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+.card-label{font-size:12.5px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;}
+.chip{font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:100px;}
+.chip-live{background:rgba(0,200,150,0.12); color:var(--accent-dark);}
+.chip-warn{background:rgba(242,201,78,0.18); color:#9a7b0a;}
+.chip-danger{background:rgba(235,87,87,0.12); color:var(--danger);}
+
+.col-3{grid-column:span 3;}
+.col-4{grid-column:span 4;}
+.col-5{grid-column:span 5;}
+.col-7{grid-column:span 7;}
+.col-6{grid-column:span 6;}
+.col-8{grid-column:span 8;}
+.col-12{grid-column:span 12;}
+
+/* Appointment card */
+.appt-card{background:linear-gradient(135deg,#2F80ED,#4C97F0 60%,#56CCF2); color:#fff; position:relative; overflow:hidden;}
+.appt-card::after{
+  content:''; position:absolute; width:220px; height:220px; border-radius:50%;
+  background:rgba(255,255,255,0.08); top:-90px; right:-60px;
+}
+.appt-card .card-label{color:rgba(255,255,255,0.75);}
+.appt-doc{display:flex; align-items:center; gap:12px; margin:14px 0 18px;}
+.appt-doc .dpfp{width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,0.22); display:flex; align-items:center; justify-content:center; font-weight:800;}
+.appt-doc .dname{font-weight:800; font-size:15.5px;}
+.appt-doc .dspec{font-size:12.5px; color:rgba(255,255,255,0.8);}
+.appt-meta{display:flex; gap:18px; font-size:13px; margin-bottom:18px;}
+.appt-meta div{display:flex; flex-direction:column; gap:2px;}
+.appt-meta span:first-child{color:rgba(255,255,255,0.7); font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;}
+.appt-meta span:last-child{font-weight:700;}
+.appt-btn{
+  width:100%; background:rgba(255,255,255,0.16); color:#fff; font-weight:700; padding:12px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; gap:8px; font-size:13.5px; backdrop-filter:blur(6px);
+  transition:.2s;
+}
+.appt-btn:hover{background:rgba(255,255,255,0.26);}
+
+/* Queue card */
+.queue-num{font-size:52px; font-weight:800; letter-spacing:-0.03em; color:var(--primary); font-family:'JetBrains Mono', monospace; line-height:1;}
+.queue-sub{font-size:13px; color:var(--ink-soft); margin-top:4px; font-weight:600;}
+.progress-track{height:8px; background:var(--bg); border-radius:100px; margin:18px 0 10px; overflow:hidden;}
+.progress-fill{height:100%; border-radius:100px; background:linear-gradient(90deg,var(--accent),#3be2b8); width:64%; position:relative; animation:fillglow 2.4s ease-in-out infinite;}
+@keyframes fillglow{0%,100%{filter:brightness(1);} 50%{filter:brightness(1.15);}}
+.queue-foot{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+
+/* Consultation status */
+.status-row{display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);}
+.status-row:last-child{border-bottom:none; padding-bottom:0;}
+.status-ico{width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.status-txt .t1{font-size:13.5px; font-weight:700;}
+.status-txt .t2{font-size:12px; color:var(--ink-soft);}
+
+/* Health status radial */
+.radial-wrap{display:flex; align-items:center; gap:20px;}
+.radial{position:relative; width:96px; height:96px; flex-shrink:0;}
+.radial svg{transform:rotate(-90deg);}
+.radial-val{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px;}
+.health-list{font-size:12.5px; color:var(--ink-soft); display:flex; flex-direction:column; gap:6px;}
+.health-list li{list-style:none; display:flex; align-items:center; gap:8px;}
+.health-list .dot{width:7px; height:7px; border-radius:50%;}
+
+/* Medication reminder */
+.med-item{display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid var(--line);}
+.med-item:last-child{border:none; padding-bottom:0;}
+.med-circle{position:relative; width:44px; height:44px; flex-shrink:0;}
+.med-info .mname{font-size:13.5px; font-weight:700;}
+.med-info .mtime{font-size:12px; color:var(--ink-soft);}
+.med-check{
+  margin-left:auto; width:30px; height:30px; border-radius:10px; border:1.5px solid var(--line);
+  display:flex; align-items:center; justify-content:center; transition:.2s; background:none;
+}
+.med-check.done{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+/* Nearby clinic - Google Map */
+.map-card{position:relative; height:100%; min-height:240px; border-radius:var(--r-md); overflow:hidden;}
+#clinicMap{position:absolute; inset:0; width:100%; height:100%; background:#EEF3F8;}
+.map-fallback{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:8px; text-align:center; padding:20px; color:var(--ink-soft); font-size:12.5px;
+  background:linear-gradient(120deg, rgba(47,128,237,0.06), rgba(0,200,150,0.06));
+}
+.clinic-pop{
+  position:absolute; bottom:14px; left:14px; right:14px; z-index:5;
+  background:#fff; border-radius:16px; padding:12px 14px; box-shadow:var(--shadow-soft);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.clinic-pop .cname{font-size:13px; font-weight:800;}
+.clinic-pop .cmeta{font-size:11.5px; color:var(--ink-soft);}
+
+/* Scanner upload */
+.upload-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:14px;}
+.upload-slot{
+  position:relative; aspect-ratio:1/1; border-radius:16px; border:1.6px dashed var(--line);
+  background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; cursor:pointer; transition:.2s; overflow:hidden; text-align:center; padding:8px;
+}
+.upload-slot:hover{border-color:var(--primary); background:rgba(47,128,237,0.04);}
+.upload-slot.filled{border-style:solid; border-color:var(--accent);}
+.upload-slot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.upload-slot .up-icon{width:26px; height:26px; color:var(--ink-faint);}
+.upload-slot .up-label{font-size:11px; font-weight:700; color:var(--ink-soft);}
+.upload-slot .up-remove{
+  position:absolute; top:6px; right:6px; width:22px; height:22px; border-radius:50%;
+  background:rgba(14,42,71,0.55); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:12px; z-index:2;
+}
+.upload-slot .up-check{
+  position:absolute; bottom:6px; right:6px; width:20px; height:20px; border-radius:50%;
+  background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; z-index:2;
+}
+.upload-slot input[type=file]{display:none;}
+.scan-submit{
+  width:100%; padding:12px; border-radius:14px; font-size:13.5px; font-weight:700;
+  background:var(--bg); color:var(--ink-faint); transition:.2s;
+}
+.scan-submit.ready{background:linear-gradient(135deg,var(--primary),#4C97F0); color:#fff; box-shadow:0 10px 22px -8px rgba(47,128,237,0.5);}
+
+/* Timeline */
+.timeline{position:relative; padding-left:26px;}
+.timeline::before{content:''; position:absolute; left:6px; top:4px; bottom:4px; width:2px; background:var(--line);}
+.tl-item{position:relative; padding-bottom:22px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{position:absolute; left:-26px; top:2px; width:14px; height:14px; border-radius:50%; background:#fff; border:3px solid var(--primary);}
+.tl-date{font-size:11.5px; color:var(--ink-faint); font-weight:700; text-transform:uppercase;}
+.tl-title{font-size:14px; font-weight:700; margin-top:2px;}
+.tl-desc{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+
+
+
+footer{padding:60px 40px 40px; text-align:center; color:var(--ink-faint); font-size:13px; border-top:1px solid var(--line); margin-top:40px;}
+
+@media(max-width:1080px){
+  .hero-grid{grid-template-columns:1fr;}
+  .stage{display:none;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .nav-links{display:none;}
+  .col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12;}
+}
+@media(max-width:640px){
+  .wrap, .hero, section.block, .topnav{padding-left:20px; padding-right:20px;}
+  .hero h1{font-size:36px;}
+  .stats-strip{padding:24px 20px;}
+  .dash-grid{padding:20px;}
+  .dash-topbar{padding:20px;}
+  .upload-row{gap:8px;}
+}
+
+/* ---------- Nav auth state ---------- */
+.nav-user{display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:700; color:var(--ink);}
+.nav-user-pfp{
+  width:32px; height:32px; border-radius:10px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800;
+}
+
+/* ---------- Auth pages (login / register) ---------- */
+.auth-shell{
+  min-height:calc(100vh - 130px); display:flex; align-items:center; justify-content:center;
+  padding:60px 20px;
+  background:
+    radial-gradient(1000px 500px at 85% -10%, rgba(86,204,242,0.25), transparent 60%),
+    radial-gradient(800px 450px at 5% 10%, rgba(47,128,237,0.12), transparent 55%);
+}
+.auth-card{
+  width:100%; max-width:460px; background:var(--card); border:1px solid var(--line);
+  border-radius:var(--r-lg); box-shadow:var(--shadow-soft); padding:40px 38px;
+}
+.auth-card.wide{max-width:640px;}
+.auth-head{margin-bottom:26px;}
+.auth-head h1{font-size:26px; font-weight:800; letter-spacing:-0.02em; margin-top:12px;}
+.auth-head p{color:var(--ink-soft); font-size:14px; margin-top:8px; line-height:1.55;}
+.field-group{margin-bottom:16px;}
+.field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.field-row.three{grid-template-columns:1fr 1fr 1fr;}
+label.field-label{
+  display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:7px;
+}
+.field-input, select.field-input{
+  width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--line);
+  background:var(--bg); font-family:inherit; font-size:14px; color:var(--ink); transition:.2s;
+}
+.field-input:focus, select.field-input:focus{
+  outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 4px rgba(47,128,237,0.1);
+}
+.field-hint{font-size:11.5px; color:var(--ink-faint); margin-top:6px;}
+.field-error{
+  font-size:12.5px; color:var(--danger); font-weight:600; margin-top:6px; display:none;
+}
+.field-error.show{display:block;}
+.auth-submit{width:100%; padding:14px; border-radius:14px; font-size:15px; margin-top:6px;}
+.auth-alt{text-align:center; font-size:13.5px; color:var(--ink-soft); margin-top:22px;}
+.auth-alt a{color:var(--primary); font-weight:700;}
+.auth-divider{display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--ink-faint); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
+.auth-divider::before, .auth-divider::after{content:''; flex:1; height:1px; background:var(--line);}
+.form-banner{
+  padding:12px 14px; border-radius:12px; font-size:13px; font-weight:600; margin-bottom:18px; display:none;
+}
+.form-banner.show{display:block;}
+.form-banner.error{background:rgba(235,87,87,0.1); color:var(--danger);}
+.form-banner.success{background:rgba(0,200,150,0.12); color:var(--accent-dark);}
+
+/* ---------- Find a Doctor page ---------- */
+.fd-hero{padding:56px 40px 30px; max-width:900px; margin:0 auto; text-align:left;}
+.fd-hero h1{font-size:34px; font-weight:800; letter-spacing:-0.02em; margin-top:14px;}
+.fd-hero p{color:var(--ink-soft); font-size:15.5px; margin-top:10px; max-width:600px;}
+.fd-wrap{max-width:1100px; margin:0 auto; padding:10px 40px 80px;}
+.fd-section-title{font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin:34px 0 16px;}
+.fd-section-title:first-child{margin-top:0;}
+.doc-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:16px;}
+.doc-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--r-md); padding:20px;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s; display:flex; flex-direction:column; gap:12px;
+}
+.doc-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-soft);}
+.doc-top{display:flex; align-items:center; gap:12px;}
+.doc-pfp{
+  width:48px; height:48px; border-radius:14px; flex-shrink:0; color:#fff; font-weight:800; font-size:15px;
+  display:flex; align-items:center; justify-content:center;
+}
+.doc-name{font-weight:800; font-size:15px;}
+.doc-spec{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+.doc-meta{display:flex; align-items:center; gap:14px; font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+.doc-meta .rating{color:#9a7b0a; display:flex; align-items:center; gap:4px;}
+.doc-clinic{font-size:12.5px; color:var(--ink-faint); display:flex; align-items:center; gap:6px;}
+.doc-slot{
+  font-size:12px; font-weight:700; color:var(--accent-dark); background:rgba(0,200,150,0.1);
+  padding:6px 10px; border-radius:100px; display:inline-flex; align-self:flex-start;
+}
+.doc-book-btn{
+  width:100%; padding:11px; border-radius:12px; font-size:13.5px; font-weight:700;
+  background:linear-gradient(135deg,var(--primary),#4C97F0); color:#fff; margin-top:4px;
+}
+.doc-book-btn:hover{transform:translateY(-1px);}
+
+/* ---------- Booking modal ---------- */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(14,42,71,0.45); backdrop-filter:blur(3px);
+  display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px;
+}
+.modal-card{
+  width:100%; max-width:420px; background:#fff; border-radius:var(--r-lg); padding:30px 28px;
+  box-shadow:var(--shadow-float);
+}
+.modal-card h3{font-size:19px; font-weight:800; margin-bottom:4px;}
+.modal-card .msub{font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
+.modal-actions{display:flex; gap:10px; margin-top:22px;}
+.modal-actions .btn{flex:1;}
+
+/* ---------- Dashboard empty states ---------- */
+.empty-card{
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:10px;
+  text-align:left; padding:6px 2px;
+}
+.empty-card .ec-icon{
+  width:42px; height:42px; border-radius:13px; background:rgba(47,128,237,0.1);
+  display:flex; align-items:center; justify-content:center; color:var(--primary); margin-bottom:2px;
+}
+.empty-card .ec-title{font-size:14px; font-weight:800;}
+.empty-card .ec-sub{font-size:12.5px; color:var(--ink-soft); line-height:1.5;}
+.empty-card .btn{margin-top:6px; padding:10px 18px; font-size:13px;}
+
+.logged-out-panel{
+  max-width:640px; margin:60px auto; text-align:center; padding:54px 40px;
+  background:var(--card); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-soft);
+}
+.logged-out-panel .lop-icon{
+  width:64px; height:64px; border-radius:20px; margin:0 auto 18px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex; align-items:center; justify-content:center;
+}
+.logged-out-panel h3{font-size:22px; font-weight:800; margin-bottom:10px;}
+.logged-out-panel p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; max-width:420px; margin:0 auto 26px;}
+.logged-out-panel .lop-actions{display:flex; gap:12px; justify-content:center;}
+
+@media(max-width:640px){
+  .field-row, .field-row.three{grid-template-columns:1fr;}
+  .auth-card{padding:30px 22px;}
+  .fd-hero, .fd-wrap{padding-left:20px; padding-right:20px;}
+}
+
+
+/* ===== merge additions ===== */
+/* ============================================================
+   Dent-in × Haackathon — merge-only additions.
+   Reuses Dent-in's original tokens/classes; only adds the
+   pieces needed to fuse the two products into one SPA.
+   ============================================================ */
+
+/* ---- SPA view switching ---- */
+.view { display: none; }
+.view.active { display: block; animation: viewIn .32s cubic-bezier(.22,.61,.36,1); }
+@keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* nav active link */
+.nav-links a.current { color: var(--primary); }
+
+/* ---- API console drawer: makes the "two products talking" visible ---- */
+.api-fab{
+  position: fixed; right: 20px; bottom: 20px; z-index: 300;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 11px 15px; border-radius: 999px;
+  background: var(--ink); color: #fff; font-weight: 700; font-size: 13px;
+  box-shadow: var(--shadow-float); border: 1px solid rgba(255,255,255,.12);
+}
+.api-fab .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(0,200,150,.22); animation: apipulse 2s infinite; }
+@keyframes apipulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.api-fab .cnt{ background: rgba(255,255,255,.16); border-radius: 999px; padding: 1px 8px; font-size: 12px; }
+
+.api-drawer{
+  position: fixed; right: 20px; bottom: 74px; z-index: 300;
+  width: min(420px, calc(100vw - 40px)); max-height: 60vh; display: none;
+  flex-direction: column; background: #0b1f38; color: #cfe0f5;
+  border: 1px solid rgba(255,255,255,.10); border-radius: 18px; overflow: hidden;
+  box-shadow: var(--shadow-float);
+}
+.api-drawer.open{ display: flex; }
+.api-drawer .adh{ display:flex; align-items:center; justify-content:space-between;
+  padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.api-drawer .adh b{ font-size: 13.5px; color:#fff; letter-spacing:-.01em; }
+.api-drawer .adh span{ font-size: 11.5px; color:#7fa9d6; }
+.api-drawer .adh button{ background: rgba(255,255,255,.08); color:#cfe0f5; border-radius: 8px;
+  width: 26px; height: 26px; font-size: 15px; line-height: 1; }
+.api-log{ overflow-y: auto; padding: 8px; font-family:'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; }
+.api-row{ display:flex; gap: 8px; align-items:flex-start; padding: 7px 8px; border-radius: 9px; }
+.api-row + .api-row{ margin-top: 2px; }
+.api-row:nth-child(odd){ background: rgba(255,255,255,.03); }
+.api-m{ font-weight: 700; padding: 1px 6px; border-radius: 6px; font-size: 10.5px; flex: none; }
+.api-m.GET{ background: rgba(47,128,237,.22); color:#8fc0ff; }
+.api-m.POST{ background: rgba(0,200,150,.20); color:#66e0bd; }
+.api-m.PATCH{ background: rgba(242,201,78,.22); color:#f2c94c; }
+.api-m.DELETE{ background: rgba(235,87,87,.22); color:#ff9a9a; }
+.api-path{ color:#e6eefb; word-break: break-all; }
+.api-msg{ color:#7fa9d6; display:block; margin-top: 2px; }
+.api-ok{ color:#66e0bd; } .api-err{ color:#ff9a9a; }
+.api-empty{ padding: 20px 12px; text-align:center; color:#5f83ad; font-size: 12px;
+  font-family:'Plus Jakarta Sans',sans-serif; }
+
+/* ---- scan analysis result card ---- */
+.scan-analyzing{ display:flex; align-items:center; gap:10px; margin-top:12px; font-size:13px;
+  color: var(--ink-soft); font-weight:600; }
+.scan-spin{ width:16px; height:16px; border:2.5px solid rgba(47,128,237,.25);
+  border-top-color: var(--primary); border-radius:50%; animation: spin .8s linear infinite; }
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+.scan-result{ margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.sr-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 12px; }
+.sr-score-wrap{ display:flex; align-items:center; gap: 14px; }
+.sr-ring{ width: 66px; height: 66px; flex:none; }
+.sr-score-txt .n{ font-size: 22px; font-weight: 800; letter-spacing:-.02em; line-height:1; }
+.sr-score-txt .l{ font-size: 11.5px; color: var(--ink-soft); font-weight: 600; margin-top: 3px; }
+.sr-conf{ font-size: 11px; color: var(--ink-faint); font-weight:600; }
+.sr-issues{ display:flex; flex-direction:column; gap: 8px; }
+.sr-issue{ display:flex; gap: 9px; align-items:flex-start; font-size: 12.5px; }
+.sr-issue .tag{ font-size: 10px; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+  padding: 2px 7px; border-radius: 6px; flex:none; }
+.sr-issue .tag.mild{ background: rgba(242,201,78,.20); color:#9a7b0a; }
+.sr-issue .tag.early{ background: rgba(86,204,242,.18); color:#0d6a8f; }
+.sr-issue .txt{ color: var(--ink-soft); }
+.sr-rec{ margin-top: 12px; background: rgba(0,200,150,.08); border: 1px solid rgba(0,200,150,.18);
+  border-radius: 12px; padding: 11px 12px; font-size: 12.5px; color: var(--accent-dark); font-weight:600; }
+
+/* ---- self-contained mini clinic map (replaces Google Maps key dep) ---- */
+.mini-map{ position:relative; height: 150px; border-radius: 14px; overflow:hidden;
+  background: linear-gradient(160deg,#eef6ff,#dff3ff); }
+.mini-map svg{ position:absolute; inset:0; width:100%; height:100%; }
+.mini-pin{ position:absolute; transform: translate(-50%,-100%); }
+.mini-you{ position:absolute; transform: translate(-50%,-50%); width:14px; height:14px;
+  border-radius:50%; background: var(--accent); border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+.mini-you::after{ content:''; position:absolute; inset:-8px; border-radius:50%;
+  border: 2px solid rgba(0,200,150,.4); animation: apipulse 2s infinite; }
+
+/* toast */
+.toast-wrap{ position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+  z-index: 400; display:flex; flex-direction:column; gap:8px; align-items:center; }
+.toast{ background: var(--ink); color:#fff; padding: 12px 18px; border-radius: 12px;
+  font-size: 13.5px; font-weight:600; box-shadow: var(--shadow-float);
+  animation: toastIn .3s ease, toastOut .3s ease 3.2s forwards; max-width: 90vw; }
+.toast.err{ background: var(--danger); }
+.toast.ok{ background: var(--accent-dark); }
+@keyframes toastIn{ from{opacity:0; transform: translateY(10px);} }
+@keyframes toastOut{ to{opacity:0; transform: translateY(10px);} }
+
+/* seed hint on empty doctor booking */
+.demo-tip{ font-size: 12px; color: var(--ink-faint); font-weight:600; margin-top:6px; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; }
+}
+
+/* ==================================================================
+   ADMIN / FASKES DASHBOARD — persona switch + management console
+   ================================================================== */
+.persona-switch{
+  display:flex; align-items:center; gap:2px; background:var(--bg);
+  border:1px solid var(--line); border-radius:100px; padding:3px; flex-shrink:0;
+}
+.persona-switch button{
+  display:flex; align-items:center; gap:7px; padding:9px 16px; border-radius:100px;
+  font-size:13.5px; font-weight:700; color:var(--ink-soft); background:transparent; transition:.2s;
+}
+.persona-switch button svg{width:14px; height:14px;}
+.persona-switch button.active{background:#fff; color:var(--primary); box-shadow:var(--shadow-soft);}
+.persona-switch button:not(.active):hover{color:var(--ink);}
+
+/* Admin hero */
+.admin-hero{
+  padding:56px 40px 30px;
+  background:
+    radial-gradient(900px 460px at 90% -10%, rgba(0,200,150,0.14), transparent 60%),
+    radial-gradient(800px 420px at 5% 0%, rgba(47,128,237,0.12), transparent 55%);
+}
+.admin-hero .wrap{display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;}
+.admin-hero h1{font-size:32px; font-weight:800; letter-spacing:-0.02em; margin-top:12px;}
+.admin-hero p{color:var(--ink-soft); font-size:15px; margin-top:8px; max-width:520px; line-height:1.6;}
+.admin-clinic-chip{
+  display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line);
+  border-radius:16px; padding:12px 16px; box-shadow:var(--shadow-soft);
+}
+.admin-clinic-chip .acc-ico{
+  width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0;
+}
+.admin-clinic-chip .acc-name{font-size:14px; font-weight:800;}
+.admin-clinic-chip .acc-role{font-size:12px; color:var(--ink-soft); font-weight:600;}
+
+/* KPI row */
+.kpi-row{max-width:1280px; margin:0 auto; padding:0 40px 10px; display:grid; grid-template-columns:repeat(6,1fr); gap:16px;}
+.kpi-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r-sm); padding:18px; box-shadow:var(--shadow-soft);}
+.kpi-card .kpi-ico{width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;}
+.kpi-card .kpi-num{font-size:24px; font-weight:800; letter-spacing:-0.02em; font-family:'JetBrains Mono', monospace;}
+.kpi-card .kpi-label{font-size:12px; color:var(--ink-soft); font-weight:600; margin-top:4px;}
+
+/* Admin sub-tabs */
+.admin-tabs{
+  max-width:1280px; margin:22px auto 0; padding:0 40px;
+  display:flex; gap:6px; border-bottom:1px solid var(--line);
+}
+.admin-tab{
+  padding:13px 6px; margin-right:22px; font-size:14px; font-weight:700; color:var(--ink-faint);
+  border-bottom:2.5px solid transparent; transition:.2s; display:flex; align-items:center; gap:7px;
+}
+.admin-tab .cnt{
+  font-size:11px; font-weight:800; background:var(--bg); color:var(--ink-soft);
+  padding:1px 7px; border-radius:100px;
+}
+.admin-tab:hover{color:var(--ink);}
+.admin-tab.active{color:var(--primary); border-bottom-color:var(--primary);}
+.admin-tab.active .cnt{background:rgba(47,128,237,0.12); color:var(--primary);}
+
+.admin-panel{max-width:1280px; margin:0 auto; padding:28px 40px 90px;}
+.admin-toolbar{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; flex-wrap:wrap;}
+.admin-search{
+  display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:10px 14px; min-width:260px; flex:1; max-width:340px;
+}
+.admin-search svg{flex-shrink:0; color:var(--ink-faint);}
+.admin-search input{border:none; outline:none; font:inherit; font-size:13.5px; width:100%; background:transparent; color:var(--ink);}
+
+/* Data table */
+.table-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-soft);}
+.data-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+.data-table th{
+  text-align:left; padding:14px 18px; font-size:11.5px; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.05em; color:var(--ink-faint); background:var(--bg); border-bottom:1px solid var(--line); white-space:nowrap;
+}
+.data-table td{padding:14px 18px; border-bottom:1px solid var(--line); vertical-align:middle;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:rgba(47,128,237,0.03);}
+.dt-person{display:flex; align-items:center; gap:10px;}
+.dt-avatar{
+  width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:12.5px; color:#fff; flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+.dt-name{font-weight:700; font-size:13.5px;}
+.dt-sub{font-size:12px; color:var(--ink-soft);}
+.dt-empty{padding:50px 20px; text-align:center; color:var(--ink-faint); font-size:13.5px; font-weight:600;}
+.dt-actions{display:flex; gap:6px; flex-wrap:wrap;}
+.dt-btn{
+  font-size:12px; font-weight:700; padding:7px 12px; border-radius:9px; background:var(--bg);
+  color:var(--ink-soft); border:1px solid var(--line); transition:.2s;
+}
+.dt-btn:hover{background:#fff; box-shadow:var(--shadow-soft);}
+.dt-btn.pri{background:rgba(47,128,237,0.1); color:var(--primary); border-color:transparent;}
+.dt-btn.ok{background:rgba(0,200,150,0.12); color:var(--accent-dark); border-color:transparent;}
+.dt-btn.danger{background:rgba(235,87,87,0.1); color:var(--danger); border-color:transparent;}
+
+.status-badge{font-size:11px; font-weight:800; padding:4px 10px; border-radius:100px; text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap;}
+.status-badge.SCHEDULED{background:rgba(86,204,242,0.16); color:#0d6a8f;}
+.status-badge.CONFIRMED{background:rgba(47,128,237,0.12); color:var(--primary);}
+.status-badge.IN_PROGRESS{background:rgba(242,201,78,0.2); color:#9a7b0a;}
+.status-badge.COMPLETED{background:rgba(0,200,150,0.14); color:var(--accent-dark);}
+.status-badge.CANCELLED{background:rgba(235,87,87,0.1); color:var(--danger);}
+.status-badge.UPLOADED{background:rgba(242,201,78,0.2); color:#9a7b0a;}
+.status-badge.active-yes{background:rgba(0,200,150,0.14); color:var(--accent-dark);}
+.status-badge.active-no{background:rgba(235,87,87,0.1); color:var(--danger);}
+
+.toggle-switch{position:relative; width:38px; height:22px; border-radius:100px; background:var(--line); flex-shrink:0; transition:.2s;}
+.toggle-switch::after{content:''; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:.2s;}
+.toggle-switch.on{background:var(--accent);}
+.toggle-switch.on::after{transform:translateX(16px);}
+
+.admin-score{display:flex; align-items:center; gap:8px; font-weight:800; font-size:13.5px;}
+.admin-score .dot{width:8px; height:8px; border-radius:50%;}
+</style>
+</head>
+<body>
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav">
+  <a class="brand" href="#/home">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C9 3 6.5 4.8 6.5 8.2c0 2.6 1 4 1.3 6.4.3 2.3.5 5.4 2 5.4 1.6 0 1.5-4.3 2.2-4.3s.6 4.3 2.2 4.3c1.5 0 1.7-3.1 2-5.4.3-2.4 1.3-3.8 1.3-6.4C17.5 4.8 15 3 12 3Z" fill="white"/></svg>
+    </span>
+    Dent-in
+  </a>
+  <div class="nav-links" id="patientNavLinks">
+    <a href="#/home" data-route="home">Home</a>
+    <a href="#/find" data-route="find">Find a Doctor</a>
+    <a href="#/about" data-route="about">About</a>
+  </div>
+  <div class="nav-cta" data-auth-slot></div>
+</nav>
+
+<!-- ==================== VIEW: HOME (hero + dashboard) ==================== -->
+<div class="view" id="view-home">
+  <header class="hero" id="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Smart Dental Care, Simplified</div>
+        <h1>Your smile deserves a <em>smarter</em> kind of care.</h1>
+        <p class="lede">Book verified dentists, track your queue in real time, get AI-assisted checks, and never miss a follow-up — all from one calm, connected app.</p>
+        <div class="hero-actions">
+          <a href="#/find" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+            Book Appointment
+          </a>
+          <a href="#/find" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.4"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+            Consult Dentist
+          </a>
+        </div>
+        <div class="trust-row">
+          <div class="avatars"><span>A</span><span>M</span><span>R</span></div>
+          <div class="trust-text"><b>24,000+</b> patients trust Dent-in<br>for everyday dental care</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-photo">
+          <svg class="tooth-illustration" viewBox="0 0 340 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="toothGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dff3ff"/></linearGradient></defs>
+            <circle cx="180" cy="150" r="150" fill="#EAF4FF"/>
+            <circle cx="240" cy="330" r="90" fill="#DFF7EF"/>
+            <path d="M170 90c-40 0-72 24-72 66 0 34 13 52 17 84 4 30 7 70 26 70s20-56 29-56 10 56 29 56 22-40 26-70c4-32 17-50 17-84 0-42-32-66-72-66Z" fill="url(#toothGrad)" stroke="#BFE0FF" stroke-width="2"/>
+            <circle cx="140" cy="130" r="10" fill="#ffffff" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="float-card glass appt" id="heroApptCard">
+          <div class="fc-head"><div class="fc-icon" style="background:rgba(47,128,237,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg></div>
+            <div class="fc-title">Next Appointment</div></div>
+          <div class="fc-main" id="heroApptMain">Routine Dental Checkup</div><div class="fc-sub" id="heroApptSub"></div>
+        </div>
+        <div class="float-card glass reminder" id="heroMedCard">
+          <div class="fc-head"><div class="fc-icon" style="background:rgba(0,200,150,0.14);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2.2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+            <div class="fc-title">Dental Care</div></div>
+          <div class="fc-main" id="heroMedMain">Time for a check-up</div><div class="fc-sub" id="heroMedSub"></div>
+        </div>
+        <div class="float-card glass emergency">
+          <div class="fc-head"><span class="pulse-dot"></span><div class="fc-title" style="color:var(--danger);">Emergency Ready</div></div>
+          <div class="fc-main">24/7 urgent care</div><div class="fc-sub">Find nearest clinic from your location</div>
+        </div>
+        <div class="float-card glass stat">
+          <div class="fc-title">Satisfaction</div><div class="fc-main" style="font-size:22px;">98.4%</div><div class="fc-sub">from 24k reviews</div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-item"><div class="num"><span>870+</span></div><div class="label">Verified dentists</div></div>
+      <div class="stat-item"><div class="num"><span>24k+</span></div><div class="label">Patients served</div></div>
+      <div class="stat-item"><div class="num"><span>4.9</span>/5</div><div class="label">Average rating</div></div>
+      <div class="stat-item"><div class="num"><span>6 min</span></div><div class="label">Avg. queue wait</div></div>
+    </div>
+  </header>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="block" id="dashboard">
+    <div class="section-head wrap" style="padding:0;">
+      <div class="eyebrow">Product · Dashboard</div>
+      <h2>Everything about your smile, in one calm view.</h2>
+      <p>Appointments, queue status, reminders and health history — surfaced the moment you open the app, all driven by the Dent-in API.</p>
+    </div>
+
+    <div class="dash-shell" id="dashShell" style="display:none;">
+      <div class="dash-topbar" id="welcomeSection">
+        <div class="welcome">
+          <div class="pfp" id="dashPfp">--</div>
+          <div class="who"><div class="hi" id="dashGreeting">Good afternoon,</div><div class="name" id="dashName">—</div></div>
+        </div>
+        <div class="dash-actions">
+          <div class="icon-btn"><span class="badge"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+          <div class="icon-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div>
+          <a href="#" class="emergency-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            Emergency</a>
+        </div>
+      </div>
+      <div class="dash-grid" id="dashGrid"></div>
+    </div>
+
+    <div class="logged-out-panel" id="loggedOutPanel">
+      <div class="lop-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <h3>Log in to see your dashboard</h3>
+      <p>Your appointments, queue status, reminders and dental history all live here — but we only show real data for a signed-in patient. Create an account or log in to get started.</p>
+      <div class="lop-actions">
+        <a href="#/login" class="btn btn-outline">Log in</a>
+        <a href="#/register" class="btn btn-primary">Create account</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== VIEW: FIND A DOCTOR ==================== -->
+<div class="view" id="view-find">
+  <section class="fd-hero">
+    <div class="eyebrow">Book an Appointment</div>
+    <h1>Find the right dentist for you.</h1>
+    <p>Browse specialists for a specific concern, or book a general dentist for checkups and cleanings. Every doctor here is verified and clinic-affiliated — loaded live from the Dent-in API.</p>
+  </section>
+  <div class="fd-wrap">
+    <div class="fd-section-title">Specialists</div>
+    <div class="doc-grid" id="specialistGrid"></div>
+    <div class="fd-section-title">General Practitioners</div>
+    <div class="doc-grid" id="generalGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: LOGIN ==================== -->
+<div class="view" id="view-login">
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div class="eyebrow" id="loginEyebrow">Welcome back</div>
+        <h1 id="loginTitle">Log in to Dent-in</h1>
+        <p id="loginSub">Pick up your appointments, queue status, and dental history right where you left off.</p>
+      </div>
+
+      <div class="persona-switch" id="loginRoleSwitch" style="margin-bottom:22px; width:100%;">
+        <button type="button" class="active" data-login-role="patient" style="flex:1; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+          Patient</button>
+        <button type="button" data-login-role="professional" style="flex:1; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          Healthcare Professional</button>
+      </div>
+
+      <div class="form-banner error" id="loginBanner"></div>
+      <form id="loginForm" novalidate>
+        <div class="field-group"><label class="field-label" for="identifier" id="identifierLabel">Email or phone number</label>
+          <input class="field-input" type="text" id="identifier" placeholder="you@email.com or +62 812 3456 789" required></div>
+        <div class="field-group"><label class="field-label" for="password">Password</label>
+          <input class="field-input" type="password" id="password" placeholder="••••••••" required></div>
+        <button type="submit" class="btn btn-primary auth-submit" id="loginSubmitBtn">Log in</button>
+      </form>
+      <div class="auth-alt" id="loginAltRow">Don't have an account? <a href="#/register">Create one</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: REGISTER ==================== -->
+<div class="view" id="view-register">
+  <div class="auth-shell">
+    <div class="auth-card wide">
+      <div class="auth-head">
+        <div class="eyebrow">Join Dent-in</div>
+        <h1>Create your account</h1>
+        <p>Set up your patient profile so we can match your records to the right dentist and clinic.</p>
+      </div>
+      <div class="form-banner error" id="registerBanner"></div>
+      <form id="registerForm" novalidate>
+        <div class="field-row three">
+          <div class="field-group"><label class="field-label" for="firstName">First name</label><input class="field-input" type="text" id="firstName" required></div>
+          <div class="field-group"><label class="field-label" for="middleName">Middle name <span style="font-weight:400;">(optional)</span></label><input class="field-input" type="text" id="middleName"></div>
+          <div class="field-group"><label class="field-label" for="lastName">Last name</label><input class="field-input" type="text" id="lastName" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="dob">Date of birth</label><input class="field-input" type="date" id="dob" required></div>
+          <div class="field-group"><label class="field-label" for="gender">Gender</label>
+            <select class="field-input" id="gender" required>
+              <option value="" disabled selected>Select</option>
+              <option value="female">Female</option><option value="male">Male</option>
+              <option value="other">Other</option><option value="prefer_not">Prefer not to say</option>
+            </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="email">Email address</label><input class="field-input" type="email" id="email" required></div>
+          <div class="field-group"><label class="field-label" for="phone">Phone number</label><input class="field-input" type="tel" id="phone" placeholder="+62 812 3456 789" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field-group"><label class="field-label" for="regPassword">Password</label><input class="field-input" type="password" id="regPassword" placeholder="At least 8 characters" required minlength="8"></div>
+          <div class="field-group"><label class="field-label" for="confirmPassword">Confirm password</label><input class="field-input" type="password" id="confirmPassword" required minlength="8"></div>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Create account</button>
+      </form>
+      <div class="auth-alt">Already have an account? <a href="#/login">Log in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: ABOUT ==================== -->
+<div class="view" id="view-about">
+  <section class="fd-hero">
+    <div class="eyebrow">About Dent-in</div>
+    <h1>One connected system, from booking to diagnosis.</h1>
+    <p>Dent-in unifies the patient-facing app with a full clinical backend: patients, dentists, appointments, prescriptions, and AI-assisted teeth scans — one product, end to end.</p>
+  </section>
+  <div class="fd-wrap">
+    <div class="dash-grid">
+      <div class="card col-4"><div class="card-label">For patients</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">Register, find a verified dentist, book in seconds, track your live queue, upload photos for an AI dental check, and get prescriptions straight to your dashboard.</p></div>
+      <div class="card col-4"><div class="card-label">For clinics</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">A Spring Boot REST API manages patients, dentists, appointments with slot-conflict protection, prescriptions, and teeth-scan analysis records in one place.</p></div>
+      <div class="card col-4"><div class="card-label">AI teeth analysis</div>
+        <p class="ec-sub" style="text-align:left;margin-top:8px;">Upload front, left and right photos and the scanner returns a health score, detected issues, and follow-up recommendations — the same pipeline the clinic backend exposes.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VIEW: ADMIN / FASKES DASHBOARD ==================== -->
+<div class="view" id="view-admin">
+  <section class="admin-hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Clinic Console · Faskes</div>
+        <h1>Kelola pasien, janji temu, dan hasil scan dari satu tempat.</h1>
+        <p>Panel internal untuk klinik/faskes mitra Dent-in — bukan tampilan pasien. Data yang tampil di sini bersumber dari layanan yang sama (DentinAPI) yang dipakai aplikasi pasien.</p>
+      </div>
+      <div class="admin-clinic-chip">
+        <div class="acc-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        </div>
+        <div><div class="acc-name">Dent-in — Admin</div><div class="acc-role">Front office &amp; clinic staff</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="kpi-row" id="adminKpiRow"></div>
+
+  <nav class="admin-tabs" id="adminTabs">
+    <button type="button" class="admin-tab" data-admin-tab="overview">Ringkasan</button>
+    <button type="button" class="admin-tab" data-admin-tab="appointments">Janji Temu <span class="cnt" id="cntAppt">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="patients">Pasien <span class="cnt" id="cntPatients">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="dentists">Dokter <span class="cnt" id="cntDentists">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="scans">Scan AI <span class="cnt" id="cntScans">0</span></button>
+    <button type="button" class="admin-tab" data-admin-tab="prescriptions">Resep <span class="cnt" id="cntPres">0</span></button>
+  </nav>
+
+  <div class="admin-panel" id="adminPanel"></div>
+</div>
+
+<footer>Dent-in — Your Smart Dental Healthcare Companion. Frontend (Dent-in) + backend (Haackathon), unified.</footer>
+
+<!-- ==================== API CONSOLE ==================== -->
+<button class="api-fab" id="apiFab" title="Show API activity">
+  <span class="dot"></span> Dent-in API <span class="cnt" id="apiCount">0</span>
+</button>
+<div class="api-drawer" id="apiDrawer">
+  <div class="adh">
+    <div><b>Live API activity</b><br><span>frontend ⇄ Haackathon backend (in-browser)</span></div>
+    <div style="display:flex;gap:6px;">
+      <button id="apiClear" title="Clear">⌫</button>
+      <button id="apiClose" title="Close">×</button>
+    </div>
+  </div>
+  <div class="api-log" id="apiLogBody"></div>
+</div>
+
+<script>
+/* ==========================================================================
+   Dent-in × Haackathon — unified interactive app (single page).
+
+   WHAT THIS FILE IS:
+   The Dent-in frontend (design, pages, dashboard) fused with an in-browser
+   port of the Haackathon Spring Boot backend. Every data action goes through
+   DentinAPI, which mirrors the real controllers/services:
+     - same ApiResponse shape { success, message, data, timestamp }
+     - same appointment slot-conflict rule (AppointmentService)
+     - same simulated AI teeth-scan output (TeethScanService.analyzeScan)
+   State persists in localStorage so the app behaves across reloads.
+
+   NOTE ON PARITY: the real backend Patient has no password and there is no
+   /api/auth endpoint. The login/register here adds that missing auth layer
+   client-side (passwords kept in localStorage, demo only) so the two halves
+   connect. Swap DentinAPI's methods for real fetch('/api/...') calls when the
+   Spring server is serving this page.
+   ========================================================================== */
+
+/* ============================ 1. SEED: DENTISTS ============================
+   Frontend DOCTORS (rich display) mapped onto the backend Dentist shape.    */
+const DENTISTS = [
+  { id:1, fullName:'Dr. Amara Whitfield', email:'amara.whitfield@dentin.health', phone:'+62 811 2000 001', specialization:'Endodontist · Root Canal Specialist', licenseNumber:'DID-ENDO-1121', active:true,
+    initials:'AW', type:'specialist', rating:4.9, reviews:412, experience:'12 yrs', nextSlot:'Today · 14:30', color:'2F80ED' },
+  { id:2, fullName:'Dr. Kwame Osei', email:'kwame.osei@dentin.health', phone:'+62 811 2000 002', specialization:'Orthodontist · Braces & Aligners', licenseNumber:'DID-ORTH-0934', active:true,
+    initials:'KO', type:'specialist', rating:4.8, reviews:356, experience:'9 yrs', nextSlot:'Tomorrow · 09:00', color:'00C896' },
+  { id:3, fullName:'Dr. Layla Haddad', email:'layla.haddad@dentin.health', phone:'+62 811 2000 003', specialization:'Periodontist · Gum Specialist', licenseNumber:'DID-PERI-1408', active:true,
+    initials:'LH', type:'specialist', rating:4.9, reviews:289, experience:'14 yrs', nextSlot:'Tomorrow · 11:15', color:'2F80ED' },
+  { id:4, fullName:'Dr. Ethan Park', email:'ethan.park@dentin.health', phone:'+62 811 2000 004', specialization:'Oral Surgeon · Extractions & Implants', licenseNumber:'DID-SURG-1109', active:true,
+    initials:'EP', type:'specialist', rating:4.7, reviews:198, experience:'11 yrs', nextSlot:'Mon · 13:00', color:'00C896' },
+  { id:5, fullName:'Dr. Priya Nair', email:'priya.nair@dentin.health', phone:'+62 811 2000 005', specialization:'Pediatric Dentist · Kids\u2019 Dental Care', licenseNumber:'DID-PEDI-0827', active:true,
+    initials:'PN', type:'specialist', rating:5.0, reviews:231, experience:'8 yrs', nextSlot:'Today · 16:45', color:'2F80ED' },
+  { id:6, fullName:'Dr. Marco Belline', email:'marco.belline@dentin.health', phone:'+62 811 2000 006', specialization:'General Dentist · Checkups & Cleanings', licenseNumber:'DID-GEN-1012', active:true,
+    initials:'MB', type:'general', rating:4.8, reviews:512, experience:'10 yrs', nextSlot:'Today · 10:30', color:'00C896' },
+  { id:7, fullName:'Dr. Sofia Ramirez', email:'sofia.ramirez@dentin.health', phone:'+62 811 2000 007', specialization:'General Dentist · Family Care', licenseNumber:'DID-GEN-0731', active:true,
+    initials:'SR', type:'general', rating:4.9, reviews:447, experience:'7 yrs', nextSlot:'Tomorrow · 08:30', color:'2F80ED' },
+  { id:8, fullName:'Dr. Daniel Kim', email:'daniel.kim@dentin.health', phone:'+62 811 2000 008', specialization:'General Dentist · Preventive Care', licenseNumber:'DID-GEN-0616', active:true,
+    initials:'DK', type:'general', rating:4.6, reviews:176, experience:'6 yrs', nextSlot:'Wed · 15:00', color:'00C896' },
+  { id:9, fullName:'Dr. Grace Okafor', email:'grace.okafor@dentin.health', phone:'+62 811 2000 009', specialization:'General Dentist · Fillings & Checkups', licenseNumber:'DID-GEN-1303', active:true,
+    initials:'GO', type:'general', rating:4.8, reviews:302, experience:'13 yrs', nextSlot:'Today · 17:15', color:'2F80ED' },
+  { id:10, fullName:'Dr. Tomas Novak', email:'tomas.novak@dentin.health', phone:'+62 811 2000 010', specialization:'General Dentist · Cosmetic & Whitening', licenseNumber:'DID-GEN-0929', active:true,
+    initials:'TN', type:'general', rating:4.7, reviews:264, experience:'9 yrs', nextSlot:'Tue · 12:00', color:'00C896' },
+];
+
+/* ============================ 2. EMULATED BACKEND =========================
+   DentinAPI mirrors the Haackathon controllers + services. Each call logs a
+   line to the API console so the "two products talking" is visible.          */
+const DentinAPI = (() => {
+  const K = {
+    patients: 'dx_patients', creds: 'dx_creds', session: 'dx_session',
+    appts: 'dx_appointments', scans: 'dx_scans', pres: 'dx_prescriptions',
+    seq: 'dx_seq', log: 'dx_apilog', dentistActive: 'dx_dentist_active',
+    adminSession: 'dx_admin_session', medlog: 'dx_med_log',
+    dentistCustom: 'dx_dentist_custom', dentistDeleted: 'dx_dentist_deleted',
+  };
+  const read  = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+  const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+  // local (not UTC) YYYY-MM-DD so "today" matches the local clock
+  function todayStr(dt) {
+    const d = dt ? new Date(dt) : new Date();
+    const p = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  }
+
+  function nextId(kind) {
+    const seq = read(K.seq, {});
+    seq[kind] = (seq[kind] || 0) + 1;
+    write(K.seq, seq);
+    return seq[kind];
+  }
+  function ApiResponse(success, message, data) {
+    return { success, message, data, timestamp: new Date().toISOString() };
+  }
+  const listeners = [];
+  function log(method, path, resp) {
+    const entry = { method, path, ok: resp.success, message: resp.message, at: new Date().toISOString() };
+    const l = read(K.log, []); l.unshift(entry); write(K.log, l.slice(0, 60));
+    listeners.forEach(fn => fn());
+  }
+  const onLog = fn => listeners.push(fn);
+  const getLog = () => read(K.log, []);
+  const clearLog = () => { write(K.log, []); listeners.forEach(fn => fn()); };
+
+  /* ---------- Dentists  (GET /api/dentists) ----------
+     Seed list is read-only; admin add/remove is layered on top via
+     dx_dentist_custom (added) + dx_dentist_deleted (hidden seed ids).     */
+  function allDentists() {
+    const deleted = read(K.dentistDeleted, []);
+    const custom = read(K.dentistCustom, []);
+    const overrides = read(K.dentistActive, {});
+    return [...DENTISTS.filter(d => !deleted.includes(d.id)), ...custom]
+      .map(d => ({ ...d, active: overrides[d.id] !== undefined ? overrides[d.id] : d.active }));
+  }
+  function getDentists() {
+    const r = ApiResponse(true, 'Dentists retrieved', allDentists());
+    log('GET', '/api/dentists', r); return r;
+  }
+  function getActiveDentists() {
+    const r = ApiResponse(true, 'Active dentists', allDentists().filter(d => d.active));
+    log('GET', '/api/dentists/active', r); return r;
+  }
+  const findDentist = id => allDentists().find(d => d.id === Number(id)) || null;
+
+  /* ---------- Patients  (POST /api/patients) ---------- */
+  function createPatient(req) {
+    const patients = read(K.patients, []);
+    if (patients.some(p => p.email.toLowerCase() === (req.email || '').toLowerCase())) {
+      const r = ApiResponse(false, 'Email already exists: ' + req.email, null);
+      log('POST', '/api/patients', r); return r;
+    }
+    const patient = {
+      id: nextId('patient'),
+      fullName: req.fullName, email: req.email, phone: req.phone,
+      address: req.address || null, dateOfBirth: req.dateOfBirth || null,
+      gender: req.gender || null, emergencyContact: req.emergencyContact || null,
+      medicalHistory: req.medicalHistory || null,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    };
+    patients.push(patient); write(K.patients, patients);
+    // auth layer the backend is missing — kept separately, demo only
+    if (req.password) { const c = read(K.creds, {}); c[patient.id] = req.password; write(K.creds, c); }
+    const r = ApiResponse(true, 'Patient created', patient);
+    log('POST', '/api/patients', r); return r;
+  }
+  const getPatients = () => read(K.patients, []);
+  const findPatient = id => getPatients().find(p => p.id === Number(id)) || null;
+
+  /* ---------- Auth (client-only; backend lacks this) ---------- */
+  function login(identifier, password) {
+    const id = (identifier || '').trim().toLowerCase();
+    const patient = getPatients().find(p =>
+      p.email.toLowerCase() === id || (p.phone || '').trim() === identifier.trim());
+    const creds = read(K.creds, {});
+    if (!patient || creds[patient.id] !== password) {
+      const r = ApiResponse(false, 'That email/phone and password don\u2019t match our records.', null);
+      log('POST', '/api/auth/login', r); return r;
+    }
+    write(K.session, { patientId: patient.id });
+    const r = ApiResponse(true, 'Login successful', patient);
+    log('POST', '/api/auth/login', r); return r;
+  }
+  function logout() { localStorage.removeItem(K.session); }
+  function currentPatient() {
+    const s = read(K.session, null);
+    return s ? findPatient(s.patientId) : null;
+  }
+
+  /* ---------- Healthcare professional / clinic admin auth ----------
+     No self-registration by design — staff accounts are provisioned
+     by the clinic, not created from the public site. Fixed demo
+     credentials stand in for that provisioning step. */
+  const ADMIN_CREDENTIALS = { username: 'admin', password: 'admin123' };
+  function loginAdmin(username, password) {
+    const ok = (username || '').trim() === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password;
+    if (!ok) {
+      const r = ApiResponse(false, 'Invalid staff username or password.', null);
+      log('POST', '/api/auth/staff-login', r); return r;
+    }
+    write(K.adminSession, { role: 'admin', staffName: 'Clinic Admin', loggedInAt: new Date().toISOString() });
+    const r = ApiResponse(true, 'Staff login successful', { role: 'admin' });
+    log('POST', '/api/auth/staff-login', r); return r;
+  }
+  function logoutAdmin() { localStorage.removeItem(K.adminSession); }
+  function currentAdmin() { return read(K.adminSession, null); }
+
+  /* ---------- Appointments  (POST /api/appointments) ---------- */
+  function createAppointment(req) {
+    const patient = findPatient(req.patientId);
+    const dentist = findDentist(req.dentistId);
+    if (!patient) { const r = ApiResponse(false, 'Patient not found with id: ' + req.patientId, null); log('POST','/api/appointments',r); return r; }
+    if (!dentist) { const r = ApiResponse(false, 'Dentist not found with id: ' + req.dentistId, null); log('POST','/api/appointments',r); return r; }
+
+    // AppointmentService conflict rule: same dentist + date + time, not CANCELLED
+    const appts = read(K.appts, []);
+    const conflict = appts.some(a =>
+      a.dentistId === dentist.id &&
+      a.appointmentDate === req.appointmentDate &&
+      a.appointmentTime === req.appointmentTime &&
+      a.status !== 'CANCELLED');
+    if (conflict) {
+      const r = ApiResponse(false, 'Dentist already has an appointment at this time', null);
+      log('POST', '/api/appointments', r); return r;
+    }
+    const appt = {
+      id: nextId('appointment'),
+      patientId: patient.id, dentistId: dentist.id,
+      appointmentDate: req.appointmentDate, appointmentTime: req.appointmentTime,
+      reason: req.reason || null, notes: req.notes || null,
+      status: 'SCHEDULED', createdAt: new Date().toISOString(),
+    };
+    appts.push(appt); write(K.appts, appts);
+    const r = ApiResponse(true, 'Appointment created', appt);
+    log('POST', '/api/appointments', r); return r;
+  }
+  function getAppointmentsByPatient(pid) {
+    const data = read(K.appts, []).filter(a => a.patientId === Number(pid));
+    const r = ApiResponse(true, 'Appointments retrieved', data);
+    log('GET', `/api/appointments/patient/${pid}`, r); return r;
+  }
+  function updateAppointmentStatus(id, status) {
+    const appts = read(K.appts, []); const a = appts.find(x => x.id === Number(id));
+    if (a) { a.status = status; write(K.appts, appts); }
+    const r = ApiResponse(!!a, a ? 'Status updated' : 'Appointment not found', a || null);
+    log('PATCH', `/api/appointments/${id}/status?status=${status}`, r); return r;
+  }
+  function cancelAppointment(id) {
+    const appts = read(K.appts, []); const a = appts.find(x => x.id === Number(id));
+    if (a) { a.status = 'CANCELLED'; write(K.appts, appts); }
+    const r = ApiResponse(!!a, a ? 'Appointment cancelled' : 'Appointment not found', null);
+    log('PATCH', `/api/appointments/${id}/cancel`, r); return r;
+  }
+
+  /* ---------- Teeth scans  (POST /api/scans/upload, /analyze) ---------- */
+  function uploadScan(patientId, dentistId, images) {
+    const patient = findPatient(patientId);
+    if (!patient) { const r = ApiResponse(false, 'Patient not found with id: ' + patientId, null); log('POST','/api/scans/upload',r); return r; }
+    const scans = read(K.scans, []);
+    const scan = {
+      id: nextId('scan'), patientId: patient.id, dentistId: dentistId || null,
+      images: images || [],                 // {front,right,left} data URLs (demo)
+      imageFileName: 'teeth_front_right_left.jpg',
+      status: 'UPLOADED', aiAnalysisResult: null, confidenceScore: null,
+      detectedIssues: null, recommendations: null, createdAt: new Date().toISOString(),
+    };
+    scans.push(scan); write(K.scans, scans);
+    const r = ApiResponse(true, 'Scan uploaded', scan);
+    log('POST', '/api/scans/upload', r); return r;
+  }
+  // Mirrors TeethScanService.analyzeScan — identical simulated output.
+  function analyzeScan(id) {
+    const scans = read(K.scans, []); const scan = scans.find(s => s.id === Number(id));
+    if (!scan) { const r = ApiResponse(false, 'Teeth scan not found with id: ' + id, null); log('POST',`/api/scans/${id}/analyze`,r); return r; }
+    scan.status = 'COMPLETED';
+    scan.confidenceScore = 92.5;
+    scan.detectedIssues = 'Mild plaque buildup on molars, early signs of gingivitis on lower front teeth';
+    scan.recommendations = 'Regular brushing recommended, professional cleaning advised within 2 weeks';
+    scan.aiAnalysisResult = {
+      analysis_type: 'dental_scan', teeth_detected: 28,
+      issues_found: [
+        { type: 'plaque', severity: 'mild', location: 'molars' },
+        { type: 'gingivitis', severity: 'early', location: 'lower_front' },
+      ],
+      overall_health_score: 78,
+      recommendations: ['professional_cleaning', 'improved_brushing_technique'],
+    };
+    write(K.scans, scans);
+    const r = ApiResponse(true, 'Scan analyzed', scan);
+    log('POST', `/api/scans/${id}/analyze`, r); return r;
+  }
+  function getScansByPatient(pid) {
+    const data = read(K.scans, []).filter(s => s.patientId === Number(pid));
+    const r = ApiResponse(true, 'Scans retrieved', data);
+    log('GET', `/api/scans/patient/${pid}`, r); return r;
+  }
+  const latestScan = pid => getScansByPatient(pid).data.slice(-1)[0] || null;
+
+  /* ---------- Prescriptions  (POST /api/prescriptions) ---------- */
+  function createPrescription(req) {
+    const pres = read(K.pres, []);
+    const record = {
+      id: nextId('prescription'), patientId: req.patientId, dentistId: req.dentistId,
+      prescriptionDate: new Date().toISOString().slice(0,10),
+      diagnosis: req.diagnosis, medicationDetails: req.medicationDetails,
+      instructions: req.instructions, notesToPatient: req.notesToPatient,
+      sentToPatient: true, sentAt: new Date().toISOString(), createdAt: new Date().toISOString(),
+    };
+    pres.push(record); write(K.pres, pres);
+    const r = ApiResponse(true, 'Prescription created', record);
+    log('POST', '/api/prescriptions', r); return r;
+  }
+  function getPrescriptionsByPatient(pid) {
+    const data = read(K.pres, []).filter(p => p.patientId === Number(pid));
+    const r = ApiResponse(true, 'Prescriptions retrieved', data);
+    log('GET', `/api/prescriptions/patient/${pid}`, r); return r;
+  }
+
+  /* ---------- Admin/Faskes read-all endpoints (clinic console) ---------- */
+  function getAllAppointments() {
+    const r = ApiResponse(true, 'All appointments retrieved', read(K.appts, []));
+    log('GET', '/api/appointments', r); return r;
+  }
+  function getAllScans() {
+    const r = ApiResponse(true, 'All scans retrieved', read(K.scans, []));
+    log('GET', '/api/scans', r); return r;
+  }
+  function getAllPrescriptions() {
+    const r = ApiResponse(true, 'All prescriptions retrieved', read(K.pres, []));
+    log('GET', '/api/prescriptions', r); return r;
+  }
+  /* Dentist active/inactive is admin-controlled; the merged list (seed minus
+     deleted, plus custom) already applies overrides. */
+  function getDentistsAdmin() {
+    const r = ApiResponse(true, 'Dentists retrieved', allDentists());
+    log('GET', '/api/dentists', r); return r;
+  }
+  function setDentistActive(id, active) {
+    const overrides = read(K.dentistActive, {});
+    overrides[id] = active; write(K.dentistActive, overrides);
+    const r = ApiResponse(true, 'Dentist status updated', { id, active });
+    log('PATCH', `/api/dentists/${id}/active?active=${active}`, r); return r;
+  }
+  function createDentist(req) {
+    if (!req.fullName) { const r = ApiResponse(false, 'Nama dokter wajib diisi', null); log('POST','/api/dentists',r); return r; }
+    const custom = read(K.dentistCustom, []);
+    const initialsOf = n => n.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+    const dentist = {
+      id: 1000 + nextId('dentist'),
+      fullName: req.fullName, email: req.email || '', phone: req.phone || '',
+      specialization: req.specialization || 'General Dentist',
+      licenseNumber: req.licenseNumber || '', active: true,
+      initials: initialsOf(req.fullName), type: req.type || 'general',
+      rating: 0, reviews: 0, experience: req.experience || '—',
+      nextSlot: '—', color: '2F80ED',
+    };
+    custom.push(dentist); write(K.dentistCustom, custom);
+    const r = ApiResponse(true, 'Dentist created', dentist);
+    log('POST', '/api/dentists', r); return r;
+  }
+  function deleteDentist(id) {
+    id = Number(id);
+    const custom = read(K.dentistCustom, []);
+    const idx = custom.findIndex(d => d.id === id);
+    if (idx >= 0) { custom.splice(idx, 1); write(K.dentistCustom, custom); }
+    else { const del = read(K.dentistDeleted, []); if (!del.includes(id)) { del.push(id); write(K.dentistDeleted, del); } }
+    const r = ApiResponse(true, 'Dentist removed', { id });
+    log('DELETE', `/api/dentists/${id}`, r); return r;
+  }
+
+  /* ---------- Deletes (admin console) — cascade to keep data consistent ---------- */
+  function deletePatient(id) {
+    id = Number(id);
+    write(K.patients, read(K.patients, []).filter(p => p.id !== id));
+    write(K.appts, read(K.appts, []).filter(a => a.patientId !== id));
+    const scans = read(K.scans, []).filter(s => s.patientId !== id); write(K.scans, scans);
+    const pres = read(K.pres, []); const keptPres = pres.filter(p => p.patientId !== id);
+    write(K.pres, keptPres);
+    const removedPresIds = pres.filter(p => p.patientId === id).map(p => p.id);
+    const ml = read(K.medlog, {}); removedPresIds.forEach(pid => delete ml[pid]); write(K.medlog, ml);
+    const creds = read(K.creds, {}); delete creds[id]; write(K.creds, creds);
+    const r = ApiResponse(true, 'Patient deleted', { id });
+    log('DELETE', `/api/patients/${id}`, r); return r;
+  }
+  function deleteAppointment(id) {
+    id = Number(id);
+    write(K.appts, read(K.appts, []).filter(a => a.id !== id));
+    const r = ApiResponse(true, 'Appointment deleted', { id });
+    log('DELETE', `/api/appointments/${id}`, r); return r;
+  }
+  function deleteScan(id) {
+    id = Number(id);
+    write(K.scans, read(K.scans, []).filter(s => s.id !== id));
+    const r = ApiResponse(true, 'Scan deleted', { id });
+    log('DELETE', `/api/scans/${id}`, r); return r;
+  }
+  function deletePrescription(id) {
+    id = Number(id);
+    write(K.pres, read(K.pres, []).filter(p => p.id !== id));
+    const ml = read(K.medlog, {}); delete ml[id]; write(K.medlog, ml);
+    const r = ApiResponse(true, 'Prescription deleted', { id });
+    log('DELETE', `/api/prescriptions/${id}`, r); return r;
+  }
+
+  /* ---------- Medication adherence (patient self-report, per day) ---------- */
+  function setMedTaken(presId, date, taken) {
+    const day = date || todayStr();
+    const all = read(K.medlog, {}); const rec = all[presId] || {};
+    if (taken) rec[day] = new Date().toISOString(); else delete rec[day];
+    all[presId] = rec; write(K.medlog, all);
+    const r = ApiResponse(true, taken ? 'Marked as taken' : 'Unmarked', { presId, day, taken });
+    log('POST', `/api/prescriptions/${presId}/taken?date=${day}&taken=${taken}`, r); return r;
+  }
+  function isMedTaken(presId, date) {
+    const all = read(K.medlog, {});
+    return !!(all[presId] && all[presId][date || todayStr()]);
+  }
+  function getMedLog(presId) { return read(K.medlog, {})[presId] || {}; }
+  function getMedStats(presId) {
+    const rec = read(K.medlog, {})[presId] || {};
+    const days = Object.keys(rec).sort();
+    return { totalDays: days.length, takenToday: !!rec[todayStr()], lastDay: days.slice(-1)[0] || null };
+  }
+
+  return {
+    getDentists, getActiveDentists, findDentist,
+    createPatient, getPatients, findPatient, deletePatient,
+    login, logout, currentPatient,
+    loginAdmin, logoutAdmin, currentAdmin,
+    createAppointment, getAppointmentsByPatient, updateAppointmentStatus, cancelAppointment, deleteAppointment,
+    uploadScan, analyzeScan, getScansByPatient, latestScan, deleteScan,
+    createPrescription, getPrescriptionsByPatient, deletePrescription,
+    createDentist, deleteDentist,
+    setMedTaken, isMedTaken, getMedLog, getMedStats, todayStr,
+    getAllAppointments, getAllScans, getAllPrescriptions, getDentistsAdmin, setDentistActive,
+    onLog, getLog, clearLog,
+  };
+})();
+
+/* ================================ 3. HELPERS ============================== */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const initials = p => !p ? '' : (p.fullName || '').split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+
+function toast(msg, kind = '') {
+  let wrap = $('.toast-wrap'); if (!wrap) { wrap = document.createElement('div'); wrap.className = 'toast-wrap'; document.body.appendChild(wrap); }
+  const el = document.createElement('div'); el.className = 'toast ' + kind; el.textContent = msg;
+  wrap.appendChild(el); setTimeout(() => el.remove(), 3600);
+}
+function fmtApptDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+  if (d.getTime() === today.getTime()) return 'Today';
+  if (d.getTime() === tomorrow.getTime()) return 'Tomorrow';
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+}
+const isToday = dateStr => dateStr === new Date().toISOString().slice(0,10);
+const dentistDisplay = id => DentinAPI.findDentist(id) || {};
+
+/* ================================ 4. ROUTER ============================== */
+const routes = ['home','find','login','register','about','admin'];
+let pendingLoginRole = null;   // set right before a guarded redirect to #/login
+function route() {
+  const hash = (location.hash || '#/home').replace('#/','') || 'home';
+  const name = routes.includes(hash) ? hash : 'home';
+
+  // Clinic console is staff-only — never reachable just by knowing the URL.
+  if (name === 'admin' && !DentinAPI.currentAdmin()) {
+    pendingLoginRole = 'professional';
+    location.hash = '#/login';   // triggers hashchange -> route() runs again below
+    return;
+  }
+
+  const adminIn = !!DentinAPI.currentAdmin();
+  $$('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  $$('.nav-links a').forEach(a => a.classList.toggle('current', a.dataset.route === name));
+  $('#patientNavLinks').style.display = (name === 'admin' || adminIn) ? 'none' : '';
+  window.scrollTo({ top: 0 });
+  renderNav();
+  if (name === 'find') renderFindDoctor();
+  if (name === 'home') renderDashboard();
+  if (name === 'admin') renderAdmin();
+  if (name === 'login') { applyLoginRoleUI(pendingLoginRole || 'patient'); pendingLoginRole = null; }
+}
+window.addEventListener('hashchange', route);
+// Booking / scan land the patient on their populated dashboard.
+function goDashboard() {
+  location.hash = '#/home'; route();
+  setTimeout(() => document.getElementById('dashboard')?.scrollIntoView({ behavior: 'smooth' }), 60);
+}
+
+/* ============================== 5. TOP NAV =============================== */
+function renderNav() {
+  const slot = $('[data-auth-slot]'); if (!slot) return;
+  const admin = DentinAPI.currentAdmin();
+  const p = DentinAPI.currentPatient();
+  if (admin) {
+    slot.innerHTML = `
+      <a href="#/admin" class="btn btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        Clinic Admin</a>
+      <button type="button" class="btn btn-ghost" id="navLogoutBtn">Log out</button>`;
+    $('#navLogoutBtn').onclick = () => { DentinAPI.logoutAdmin(); toast('Logged out'); location.hash = '#/home'; route(); };
+  } else if (p) {
+    slot.innerHTML = `
+      <div class="nav-user"><div class="nav-user-pfp">${initials(p)}</div><span>${p.fullName.split(' ')[0]}</span></div>
+      <button type="button" class="btn btn-ghost" id="navLogoutBtn">Log out</button>`;
+    $('#navLogoutBtn').onclick = () => { DentinAPI.logout(); toast('Logged out'); location.hash = '#/home'; route(); };
+  } else {
+    slot.innerHTML = `
+      <a href="#/login" class="btn btn-ghost">Log in</a>
+      <a href="#/register" class="btn btn-primary">Get started</a>`;
+  }
+}
+
+/* =========================== 6. FIND A DOCTOR ============================ */
+function renderFindDoctor() {
+  const list = DentinAPI.getDentistsAdmin().data.filter(d => d.active);   // GET /api/dentists (active only)
+  const star = '<svg width="12" height="12" viewBox="0 0 24 24" fill="#F2C94C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+  const card = d => `
+    <div class="doc-card" data-doc-id="${d.id}">
+      <div class="doc-top">
+        <div class="doc-pfp" style="background:linear-gradient(135deg,#${d.color},#1B63C7);">${d.initials}</div>
+        <div><div class="doc-name">${d.fullName}</div><div class="doc-spec">${d.specialization}</div></div>
+      </div>
+      <div class="doc-meta">
+        <span class="rating">${star} ${d.rating} <span style="color:var(--ink-faint);font-weight:500;">(${d.reviews})</span></span>
+        <span>${d.experience} exp.</span>
+      </div>
+      <span class="doc-slot">Next: ${d.nextSlot}</span>
+      <button type="button" class="doc-book-btn" data-book="${d.id}">Book Appointment</button>
+    </div>`;
+  $('#specialistGrid').innerHTML = list.filter(d => d.type === 'specialist').map(card).join('');
+  $('#generalGrid').innerHTML    = list.filter(d => d.type === 'general').map(card).join('');
+}
+document.body.addEventListener('click', e => {
+  const btn = e.target.closest('[data-book]'); if (!btn) return;
+  const doc = DentinAPI.findDentist(btn.dataset.book);
+  if (!DentinAPI.currentPatient()) { toast('Log in to book an appointment', 'err'); location.hash = '#/login'; return; }
+  openBookingModal(doc);
+});
+// Daily medication check — records today's dose, resets tomorrow, history kept
+document.body.addEventListener('click', e => {
+  const btn = e.target.closest('[data-med-check]'); if (!btn) return;
+  const presId = btn.dataset.medCheck;
+  const nowTaken = !DentinAPI.isMedTaken(presId);
+  DentinAPI.setMedTaken(presId, DentinAPI.todayStr(), nowTaken);
+  toast(nowTaken ? 'Marked as taken for today' : 'Unmarked for today', 'ok');
+  renderDashboard();
+});
+
+function openBookingModal(doc) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-card">
+      <h3>Book with ${doc.fullName}</h3>
+      <div class="msub">${doc.specialization}</div>
+      <div class="field-group"><label class="field-label">Date</label>
+        <input class="field-input" type="date" id="bookDate" min="${new Date().toISOString().slice(0,10)}" required></div>
+      <div class="field-group"><label class="field-label">Time</label>
+        <input class="field-input" type="time" id="bookTime" value="14:30" required></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="modalCancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modalConfirm">Confirm Booking</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#bookDate').valueAsDate = new Date();
+  const close = () => overlay.remove();
+  overlay.querySelector('#modalCancel').onclick = close;
+  overlay.onclick = e => { if (e.target === overlay) close(); };
+  overlay.querySelector('#modalConfirm').onclick = () => {
+    const date = overlay.querySelector('#bookDate').value;
+    const time = overlay.querySelector('#bookTime').value;
+    if (!date || !time) { toast('Pick a date and time', 'err'); return; }
+    const p = DentinAPI.currentPatient();
+    const res = DentinAPI.createAppointment({
+      patientId: p.id, dentistId: doc.id, appointmentDate: date, appointmentTime: time,
+      reason: doc.specialization, notes: `Booked via Dent-in with ${doc.fullName}`,
+    });
+    if (!res.success) { toast(res.message, 'err'); return; }   // e.g. slot conflict
+    close(); toast('Appointment booked', 'ok'); goDashboard();
+  };
+}
+
+/* ============================== 7. AUTH FORMS =========================== */
+/* ---- Login: role switch (Patient vs Healthcare Professional) ---- */
+let currentLoginRole = 'patient';
+function applyLoginRoleUI(role) {
+  currentLoginRole = role;
+  $$('#loginRoleSwitch button').forEach(b => b.classList.toggle('active', b.dataset.loginRole === role));
+  $('#loginBanner').classList.remove('show');
+  $('#loginForm').reset();
+  if (role === 'professional') {
+    $('#loginEyebrow').textContent = 'Staff sign-in';
+    $('#loginTitle').textContent = 'Clinic Admin login';
+    $('#loginSub').textContent = 'For clinic staff and dentists only. Accounts are provisioned by the clinic — there is no self-service sign-up here.';
+    $('#identifierLabel').textContent = 'Username';
+    $('#identifier').placeholder = 'admin';
+    $('#loginSubmitBtn').textContent = 'Log in to Clinic Admin';
+    $('#loginAltRow').style.display = 'none';
+  } else {
+    $('#loginEyebrow').textContent = 'Welcome back';
+    $('#loginTitle').textContent = 'Log in to Dent-in';
+    $('#loginSub').textContent = 'Pick up your appointments, queue status, and dental history right where you left off.';
+    $('#identifierLabel').textContent = 'Email or phone number';
+    $('#identifier').placeholder = 'you@email.com or +62 812 3456 789';
+    $('#loginSubmitBtn').textContent = 'Log in';
+    $('#loginAltRow').style.display = '';
+  }
+}
+function bindLoginRoleSwitch() {
+  const el = $('#loginRoleSwitch'); if (!el || el.dataset.bound) return; el.dataset.bound = '1';
+  el.addEventListener('click', e => {
+    const btn = e.target.closest('[data-login-role]'); if (!btn) return;
+    applyLoginRoleUI(btn.dataset.loginRole);
+  });
+}
+function bindLogin() {
+  bindLoginRoleSwitch();
+  const form = $('#loginForm'); if (!form || form.dataset.bound) return; form.dataset.bound = '1';
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const identifier = $('#identifier').value.trim();
+    const password = $('#password').value;
+    const banner = $('#loginBanner');
+    if (!identifier || !password) { banner.textContent = 'Please fill in both fields.'; banner.classList.add('show'); return; }
+
+    if (currentLoginRole === 'professional') {
+      const res = DentinAPI.loginAdmin(identifier, password);
+      if (!res.success) { banner.textContent = res.message; banner.classList.add('show'); return; }
+      toast('Welcome, Clinic Admin', 'ok');
+      location.hash = '#/admin'; route();
+      return;
+    }
+    const res = DentinAPI.login(identifier, password);
+    if (!res.success) { banner.textContent = res.message; banner.classList.add('show'); return; }
+    toast('Welcome back, ' + res.data.fullName.split(' ')[0], 'ok');
+    goDashboard();
+  });
+}
+function bindRegister() {
+  const form = $('#registerForm'); if (!form || form.dataset.bound) return; form.dataset.bound = '1';
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const banner = $('#registerBanner');
+    const v = id => ($('#' + id)?.value || '').trim();
+    const first = v('firstName'), last = v('lastName');
+    const pw = $('#regPassword').value, pw2 = $('#confirmPassword').value;
+    if (!first || !last) { banner.textContent = 'First and last name are required.'; banner.classList.add('show'); return; }
+    if (pw.length < 8) { banner.textContent = 'Password must be at least 8 characters.'; banner.classList.add('show'); return; }
+    if (pw !== pw2) { banner.textContent = 'Passwords don\u2019t match.'; banner.classList.add('show'); return; }
+    const res = DentinAPI.createPatient({
+      fullName: [first, v('middleName'), last].filter(Boolean).join(' '),
+      email: v('email'), phone: v('phone'),
+      dateOfBirth: v('dob') || null, gender: v('gender') || null,
+      medicalHistory: null, password: pw,
+    });
+    if (!res.success) { banner.textContent = res.message; banner.classList.add('show'); return; }
+    DentinAPI.login(res.data.email, pw);       // auto-login after register
+    toast('Account created', 'ok');
+    goDashboard();
+  });
+}
+
+/* ---- Hero float cards: mirror the logged-in patient's real data ---- */
+function updateHeroCards(p, appt, pres) {
+  const am = $('#heroApptMain'), as = $('#heroApptSub');
+  const mm = $('#heroMedMain'), ms = $('#heroMedSub');
+  if (!am || !mm) return;
+  if (!p) {                                   // visitor: illustrative example
+    am.textContent = 'Routine Dental Checkup';
+    as.textContent = '';
+    mm.textContent = 'Time for a check-up';
+    ms.textContent = '';
+    return;
+  }
+  if (appt) {
+    const d = dentistDisplay(appt.dentistId);
+    am.textContent = (appt.reason || 'Dental Checkup').split('·')[0].trim();
+    as.textContent = `${fmtApptDate(appt.appointmentDate)} · ${appt.appointmentTime}${d.fullName ? ' · ' + d.fullName : ''}`;
+  } else {
+    am.textContent = 'No upcoming appointment';
+    as.textContent = 'Book a dentist to see it here';
+  }
+  if (pres) {
+    mm.textContent = 'Active prescription';
+    ms.textContent = pres.instructions || 'Check your dashboard for details';
+  } else {
+    mm.textContent = 'No active reminders';
+    ms.textContent = 'Care tips appear here';
+  }
+}
+
+/* ============================== 8. DASHBOARD ============================ */
+function renderDashboard() {
+  const p = DentinAPI.currentPatient();
+  const shell = $('#dashShell'), lop = $('#loggedOutPanel');
+  if (!shell || !lop) return;
+  if (!p) { shell.style.display = 'none'; lop.style.display = ''; updateHeroCards(null, null, null); return; }
+  shell.style.display = ''; lop.style.display = 'none';
+
+  $('#dashPfp').textContent = initials(p);
+  $('#dashName').textContent = p.fullName;
+  const h = new Date().getHours();
+  $('#dashGreeting').textContent = h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
+
+  const appts = DentinAPI.getAppointmentsByPatient(p.id).data.filter(a => a.status !== 'CANCELLED');
+  const appt = appts.slice(-1)[0] || null;
+  const scan = DentinAPI.getScansByPatient(p.id).data.slice(-1)[0] || null;
+  const pres = DentinAPI.getPrescriptionsByPatient(p.id).data.slice(-1)[0] || null;
+
+  updateHeroCards(p, appt, pres);
+
+  $('#dashGrid').innerHTML = [
+    apptCard(appt), queueCard(appt), consultationCard(appt, scan),
+    medicationCard(pres), followUpCard(scan), healthStatusCard(scan),
+    scannerCard(scan), historyCard(appt, scan),
+  ].join('');
+
+  wireScanner();
+  const manage = $('#manageApptBtn');
+  if (manage) manage.onclick = () => {
+    const res = DentinAPI.cancelAppointment(appt.id);
+    if (res.success) { toast('Appointment cancelled', 'ok'); renderDashboard(); }
+  };
+}
+
+function emptyCard(col, icon, title, sub, href, cta) {
+  return `<div class="card ${col}"><div class="empty-card">
+      <div class="ec-icon">${icon}</div><div class="ec-title">${title}</div>
+      <div class="ec-sub">${sub}</div>
+      ${href ? `<a href="${href}" class="btn btn-primary">${cta}</a>` : ''}
+    </div></div>`;
+}
+const IC = {
+  cal:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>',
+  clock:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>',
+  chat:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>',
+  pill:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.5 9 17l10.5-10.5"/></svg>',
+};
+
+function apptCard(appt) {
+  if (!appt) return emptyCard('col-5', IC.cal, 'No upcoming appointment',
+    'Book with a verified dentist to see your appointment details here.', '#/find', 'Find a Doctor');
+  const d = dentistDisplay(appt.dentistId);
+  const nice = { SCHEDULED:'Scheduled', CONFIRMED:'Confirmed', IN_PROGRESS:'In progress', COMPLETED:'Completed' }[appt.status] || appt.status;
+  return `<div class="card appt-card col-5">
+      <div class="card-head"><div class="card-label">Upcoming Appointment</div>
+        <span class="chip" style="background:rgba(255,255,255,0.2);color:#fff;">${nice}</span></div>
+      <div class="appt-doc"><div class="dpfp">${d.initials||''}</div>
+        <div><div class="dname">${d.fullName||''}</div><div class="dspec">${d.specialization||''}</div></div></div>
+      <div class="appt-meta">
+        <div><span>Date</span><span>${fmtApptDate(appt.appointmentDate)}</span></div>
+        <div><span>Time</span><span>${appt.appointmentTime}</span></div>
+</div>
+      <button class="appt-btn" id="manageApptBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+        Cancel Appointment</button></div>`;
+}
+function queueCard(appt) {
+  if (!appt) return emptyCard('col-3', IC.clock, 'No active queue',
+    'A live queue number appears once you have an appointment today.', '', '');
+  if (!isToday(appt.appointmentDate)) return `<div class="card col-3">
+      <div class="card-head"><div class="card-label">Queue Number</div></div>
+      <div style="font-size:15px;font-weight:700;margin:10px 0 6px;">Not open yet</div>
+      <div class="queue-sub">Your live queue number opens on ${fmtApptDate(appt.appointmentDate)}, the day of your visit.</div></div>`;
+  return `<div class="card col-3">
+      <div class="card-head"><div class="card-label">Queue Number</div><span class="chip chip-live">● Live</span></div>
+      <div class="queue-num">B-14</div><div class="queue-sub">3 patients ahead of you</div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="queue-foot"><span>Est. wait</span><span>~18 min</span></div></div>`;
+}
+function consultationCard(appt, scan) {
+  if (!appt && !scan) return emptyCard('col-4', IC.chat, 'No consultations yet',
+    'X-rays, scan results and treatment notes show up here after your first visit or scan.', '', '');
+  const done = scan && scan.status === 'COMPLETED';
+  return `<div class="card col-4"><div class="card-head"><div class="card-label">Consultation Status</div></div>
+      <div class="status-row"><div class="status-ico" style="background:rgba(47,128,237,0.12);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.4"><path d="M5 12l4 4 10-10"/></svg></div>
+        <div class="status-txt"><div class="t1">${appt ? 'Appointment confirmed' : 'Scan received'}</div>
+        <div class="t2">${appt ? (dentistDisplay(appt.dentistId).fullName||'') + ' · booked' : 'Awaiting dentist review'}</div></div></div>
+      <div class="status-row"><div class="status-ico" style="background:${done?'rgba(0,200,150,.16)':'rgba(242,201,78,0.18)'};">
+        ${done
+          ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#019a76" stroke-width="2.4"><path d="M5 12l4 4 10-10"/></svg>'
+          : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9a7b0a" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>'}</div>
+        <div class="status-txt"><div class="t1">${done ? 'AI analysis complete' : 'Awaiting visit'}</div>
+        <div class="t2">${done ? 'Health score '+scan.aiAnalysisResult.overall_health_score+'/100' : (appt?'Notes appear after '+fmtApptDate(appt.appointmentDate):'Run the scanner below')}</div></div></div></div>`;
+}
+function medicationCard(pres) {
+  if (!pres) return emptyCard('col-4', IC.pill, 'No medications added',
+    'After a scan or consultation your dentist can send a prescription — it shows up here.', '', '');
+  const stats = DentinAPI.getMedStats(pres.id);
+  const done = stats.takenToday;
+  const tick = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l4 4 10-10"/></svg>';
+  const streak = stats.totalDays
+    ? `${stats.totalDays} day${stats.totalDays > 1 ? 's' : ''} logged`
+    : 'Not started yet';
+  return `<div class="card col-4"><div class="card-head"><div class="card-label">Medication</div>
+      <span class="chip chip-live">Sent</span></div>
+      <div style="font-size:15px;font-weight:800;margin:4px 0 2px;">${pres.medicationDetails}</div>
+      <div class="ec-sub" style="text-align:left;margin:0 0 10px;">${pres.instructions}</div>
+      <div class="status-row">
+        <button class="med-check ${done ? 'done' : ''}" type="button" data-med-check="${pres.id}"
+          aria-pressed="${done}" aria-label="${done ? 'Taken today, tap to undo' : 'Mark as taken today'}">${done ? tick : ''}</button>
+        <div class="status-txt">
+          <div class="t1">${done ? 'Taken today ✓' : 'Mark as taken today'}</div>
+          <div class="t2">${streak}${pres.notesToPatient ? ' · ' + pres.notesToPatient : ''}</div>
+        </div></div></div>`;
+}
+function followUpCard(scan) {
+  if (!(scan && scan.status === 'COMPLETED')) return emptyCard('col-4', IC.cal, 'No follow-up scheduled',
+    'Follow-up visits show up here once a dentist recommends one.', '', '');
+  return `<div class="card col-4"><div class="card-head"><div class="card-label">Recommended Follow-up</div>
+      <span class="chip" style="background:rgba(242,201,78,.2);color:#9a7b0a;">Advised</span></div>
+      <div style="font-size:15px;font-weight:800;margin:6px 0 4px;">Professional cleaning</div>
+      <div class="ec-sub" style="text-align:left;margin:0;">Advised within 2 weeks based on your AI scan. Book a general dentist to schedule it.</div>
+      <a href="#/find" class="btn btn-outline" style="margin-top:12px;">Book follow-up</a></div>`;
+}
+function healthStatusCard(scan) {
+  if (!(scan && scan.status === 'COMPLETED')) return emptyCard('col-4', IC.check, 'Health score not available',
+    'Run the dental scanner below and we\u2019ll start tracking your gum, enamel and alignment health.', '', '');
+  const s = scan.aiAnalysisResult.overall_health_score;
+  return `<div class="card col-4"><div class="card-head"><div class="card-label">Dental Health Score</div></div>
+      <div class="sr-score-wrap" style="margin-top:8px;">${scoreRing(s)}
+        <div class="sr-score-txt"><div class="n">${s}<span style="font-size:14px;color:var(--ink-faint);">/100</span></div>
+        <div class="l">${s>=80?'Good':s>=60?'Fair — needs attention':'Needs care'}</div>
+        <div class="sr-conf">AI confidence ${scan.confidenceScore}%</div></div></div></div>`;
+}
+function historyCard(appt, scan) {
+  const items = [];
+  if (scan && scan.status === 'COMPLETED') items.push(['AI teeth scan', 'Score '+scan.aiAnalysisResult.overall_health_score+'/100 · '+scan.aiAnalysisResult.teeth_detected+' teeth detected']);
+  if (appt) items.push(['Appointment booked', (dentistDisplay(appt.dentistId).fullName||'') + ' · ' + fmtApptDate(appt.appointmentDate)]);
+  if (!items.length) return `<div class="card col-4"><div class="card-head"><div class="card-label">Recent Dental History</div></div>
+      <div class="empty-card"><div class="ec-icon">${IC.clock}</div><div class="ec-title">No visits yet</div>
+      <div class="ec-sub">Your treatment history will build up here after each appointment.</div></div></div>`;
+  return `<div class="card col-4"><div class="card-head"><div class="card-label">Recent Dental History</div></div>
+      ${items.map(([t,s]) => `<div class="status-row"><div class="status-ico" style="background:rgba(47,128,237,.1);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M5 12l4 4 10-10"/></svg></div>
+        <div class="status-txt"><div class="t1">${t}</div><div class="t2">${s}</div></div></div>`).join('')}</div>`;
+}
+function scannerCard(scan) {
+  const done = scan && scan.status === 'COMPLETED';
+  const slot = key => `<label class="upload-slot" data-slot="${key}">
+      <svg class="up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <div class="up-label">${key[0].toUpperCase()+key.slice(1)}</div>
+      <input type="file" accept="image/*" capture="environment"></label>`;
+  return `<div class="card col-4" id="scanCard">
+      <div class="card-head"><div class="card-label">Dental Condition Scanner</div>
+        <span class="chip chip-live">${done ? 'Analysed' : 'AI'}</span></div>
+      <div class="upload-row">${slot('front')}${slot('right')}${slot('left')}</div>
+      <button id="scanSubmit" class="scan-submit" disabled>Upload 3 more photos</button>
+      <div id="scanResult">${done ? scanResultHTML(scan) : ''}</div></div>`;
+}
+function scoreRing(score) {
+  const r = 26, c = 2 * Math.PI * r, off = c * (1 - score/100);
+  const col = score >= 80 ? '#00C896' : score >= 60 ? '#F2C94C' : '#EB5757';
+  return `<svg class="sr-ring" viewBox="0 0 66 66"><circle cx="33" cy="33" r="${r}" fill="none" stroke="#e7eef7" stroke-width="7"/>
+      <circle cx="33" cy="33" r="${r}" fill="none" stroke="${col}" stroke-width="7" stroke-linecap="round"
+        stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 33 33)"/>
+      <text x="33" y="38" text-anchor="middle" font-size="16" font-weight="800" fill="#0E2A47">${score}</text></svg>`;
+}
+function scanResultHTML(scan) {
+  const a = scan.aiAnalysisResult;
+  const issue = i => `<div class="sr-issue"><span class="tag ${i.severity==='mild'?'mild':'early'}">${i.severity}</span>
+      <span class="txt"><b style="color:var(--ink);text-transform:capitalize;">${i.type}</b> — ${i.location.replace('_',' ')}</span></div>`;
+  return `<div class="scan-result">
+      <div class="sr-head"><div class="sr-score-wrap">${scoreRing(a.overall_health_score)}
+        <div class="sr-score-txt"><div class="n">${a.overall_health_score}<span style="font-size:13px;color:var(--ink-faint);">/100</span></div>
+        <div class="l">${a.teeth_detected} teeth detected</div><div class="sr-conf">AI confidence ${scan.confidenceScore}%</div></div></div></div>
+      <div class="sr-issues">${a.issues_found.map(issue).join('')}</div>
+      <div class="sr-rec">Recommendation: ${scan.recommendations}.</div></div>`;
+}
+
+/* ------- Scanner interactions: upload 3 → analyze (POST /api/scans) ------- */
+const scanState = { front:null, right:null, left:null };
+function wireScanner() {
+  Object.keys(scanState).forEach(k => scanState[k] = null);
+  const card = $('#scanCard'); if (!card) return;
+  $$('.upload-slot', card).forEach(el => {
+    const slot = el.dataset.slot, input = el.querySelector('input');
+    el.addEventListener('click', e => { if (!e.target.closest('.up-remove')) input.click(); });
+    input.addEventListener('change', e => { const f = e.target.files[0]; if (f) readScan(slot, f); });
+    ['dragover','dragleave','drop'].forEach(ev => el.addEventListener(ev, e => e.preventDefault()));
+    el.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) readScan(slot, f); });
+  });
+  updateScanBtn();
+  const btn = $('#scanSubmit');
+  btn.addEventListener('click', () => {
+    if (!Object.values(scanState).every(Boolean)) return;
+    const p = DentinAPI.currentPatient();
+    const up = DentinAPI.uploadScan(p.id, null, { ...scanState });   // POST /api/scans/upload
+    if (!up.success) { toast(up.message, 'err'); return; }
+    const result = $('#scanResult');
+    result.innerHTML = `<div class="scan-analyzing"><span class="scan-spin"></span> Running AI dental analysis…</div>`;
+    btn.disabled = true; btn.textContent = 'Analysing…';
+    setTimeout(() => {
+      const an = DentinAPI.analyzeScan(up.data.id);               // POST /api/scans/{id}/analyze
+      // dentist sends a prescription off the back of the analysis
+      DentinAPI.createPrescription({
+        patientId: p.id, dentistId: 6,
+        diagnosis: an.data.detectedIssues,
+        medicationDetails: 'Chlorhexidine 0.2% mouthwash',
+        instructions: 'Rinse 10ml twice daily for 14 days',
+        notesToPatient: 'Prescribed by Dr. Marco Belline after your AI scan',
+      });
+      toast('AI analysis complete — health score ' + an.data.aiAnalysisResult.overall_health_score, 'ok');
+      renderDashboard();
+    }, 1600);
+  });
+}
+function readScan(slot, file) {
+  if (!file.type.startsWith('image/')) { toast('Please upload an image file', 'err'); return; }
+  const reader = new FileReader();
+  reader.onload = e => { scanState[slot] = e.target.result; paintSlot(slot); updateScanBtn(); };
+  reader.readAsDataURL(file);
+}
+function paintSlot(slot) {
+  const el = $(`.upload-slot[data-slot="${slot}"]`); if (!el) return;
+  const label = slot[0].toUpperCase() + slot.slice(1);
+  el.classList.add('filled');
+  el.innerHTML = `<img src="${scanState[slot]}" alt="${label} teeth">
+      <div class="up-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg></div>
+      <button type="button" class="up-remove" aria-label="Remove ${label}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <input type="file" accept="image/*" capture="environment">`;
+  const input = el.querySelector('input');
+  el.onclick = e => { if (!e.target.closest('.up-remove')) input.click(); };
+  input.onchange = e => { const f = e.target.files[0]; if (f) readScan(slot, f); };
+  el.querySelector('.up-remove').onclick = e => { e.stopPropagation(); scanState[slot] = null; unpaintSlot(slot); updateScanBtn(); };
+}
+function unpaintSlot(slot) {
+  const el = $(`.upload-slot[data-slot="${slot}"]`); if (!el) return;
+  const label = slot[0].toUpperCase() + slot.slice(1);
+  el.classList.remove('filled');
+  el.innerHTML = `<svg class="up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <div class="up-label">${label}</div><input type="file" accept="image/*" capture="environment">`;
+  const input = el.querySelector('input');
+  el.onclick = e => { if (!e.target.closest('.up-remove')) input.click(); };
+  input.onchange = e => { const f = e.target.files[0]; if (f) readScan(slot, f); };
+}
+function updateScanBtn() {
+  const btn = $('#scanSubmit'); if (!btn) return;
+  const left = Object.values(scanState).filter(v => !v).length;
+  btn.classList.toggle('ready', left === 0);
+  btn.disabled = left !== 0;
+  btn.textContent = left === 0 ? 'Run AI Analysis' : `Upload ${left} more photo${left>1?'s':''}`;
+}
+
+/* ======================= 8b. ADMIN / FASKES DASHBOARD =====================
+   Clinic-facing console: same DentinAPI, unfiltered by patient — this is the
+   "faskes" point of view (front office managing every patient/appointment).
+   ========================================================================== */
+let adminActiveTab = 'overview';
+
+function adminData() {
+  return {
+    patients: DentinAPI.getPatients(),
+    dentists: DentinAPI.getDentistsAdmin().data,
+    appts: DentinAPI.getAllAppointments().data,
+    scans: DentinAPI.getAllScans().data,
+    pres: DentinAPI.getAllPrescriptions().data,
+  };
+}
+function adminPatientName(id) {
+  const p = DentinAPI.findPatient(id);
+  return p ? p.fullName : `Patient #${id}`;
+}
+function adminDentistName(id) {
+  const d = DentinAPI.findDentist(id);
+  return d ? d.fullName : (id ? `Dentist #${id}` : '—');
+}
+
+function renderAdmin() {
+  const d = adminData();
+  renderAdminKpis(d);
+  $('#cntAppt').textContent = d.appts.filter(a => a.status !== 'CANCELLED').length;
+  $('#cntPatients').textContent = d.patients.length;
+  $('#cntDentists').textContent = d.dentists.length;
+  $('#cntScans').textContent = d.scans.length;
+  $('#cntPres').textContent = d.pres.length;
+
+  $$('#adminTabs .admin-tab').forEach(b => b.classList.toggle('active', b.dataset.adminTab === adminActiveTab));
+  renderAdminPanel(d);
+}
+$('#adminTabs').addEventListener('click', e => {
+  const btn = e.target.closest('[data-admin-tab]'); if (!btn) return;
+  adminActiveTab = btn.dataset.adminTab;
+  renderAdmin();
+});
+
+function renderAdminKpis(d) {
+  const today = new Date().toISOString().slice(0,10);
+  const kpis = [
+    { label:'Total Pasien', num:d.patients.length, ico:IC.check, bg:'rgba(47,128,237,.12)', col:'#2F80ED' },
+    { label:'Janji Temu Hari Ini', num:d.appts.filter(a=>a.appointmentDate===today && a.status!=='CANCELLED').length, ico:IC.cal, bg:'rgba(0,200,150,.14)', col:'#00C896' },
+    { label:'Menunggu Konfirmasi', num:d.appts.filter(a=>a.status==='SCHEDULED').length, ico:IC.clock, bg:'rgba(242,201,78,.2)', col:'#9a7b0a' },
+    { label:'Scan Belum Dianalisis', num:d.scans.filter(s=>s.status!=='COMPLETED').length, ico:IC.chat, bg:'rgba(235,87,87,.1)', col:'#EB5757' },
+    { label:'Resep Terkirim', num:d.pres.length, ico:IC.pill, bg:'rgba(47,128,237,.12)', col:'#2F80ED' },
+    { label:'Dokter Aktif', num:d.dentists.filter(x=>x.active).length + '/' + d.dentists.length, ico:IC.check, bg:'rgba(0,200,150,.14)', col:'#00C896' },
+  ];
+  $('#adminKpiRow').innerHTML = kpis.map(k => `
+    <div class="kpi-card"><div class="kpi-ico" style="background:${k.bg};color:${k.col};">${k.ico}</div>
+      <div class="kpi-num">${k.num}</div><div class="kpi-label">${k.label}</div></div>`).join('');
+}
+
+function renderAdminPanel(d) {
+  const panel = $('#adminPanel');
+  if (adminActiveTab === 'overview') return panel.innerHTML = adminOverviewHTML(d);
+  if (adminActiveTab === 'appointments') { panel.innerHTML = adminAppointmentsHTML(d); wireAdminAppointments(); return; }
+  if (adminActiveTab === 'patients') { panel.innerHTML = adminPatientsHTML(d); wireAdminSearch('patients', d); return; }
+  if (adminActiveTab === 'dentists') { panel.innerHTML = adminDentistsHTML(d); wireAdminDentists(); return; }
+  if (adminActiveTab === 'scans') { panel.innerHTML = adminScansHTML(d); wireAdminScans(); return; }
+  if (adminActiveTab === 'prescriptions') { panel.innerHTML = adminPrescriptionsHTML(d); return; }
+}
+
+/* ---------- Reusable add modal + option builders + delete ---------- */
+function adminModal(title, bodyHTML, onSubmit, submitLabel) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `<div class="modal-card">
+      <h3>${title}</h3>
+      <div style="max-height:60vh;overflow:auto;">${bodyHTML}</div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-mclose>Batal</button>
+        <button type="button" class="btn btn-primary" data-msubmit>${submitLabel || 'Simpan'}</button>
+      </div></div>`;
+  document.body.appendChild(overlay);
+  const close = () => overlay.remove();
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  overlay.querySelector('[data-mclose]').onclick = close;
+  overlay.querySelector('[data-msubmit]').onclick = () => { if (onSubmit(overlay) !== false) close(); };
+  return overlay;
+}
+function patientOptions(sel) {
+  const list = DentinAPI.getPatients();
+  if (!list.length) return '<option value="">(belum ada pasien)</option>';
+  return list.map(p => `<option value="${p.id}" ${p.id===sel?'selected':''}>${p.fullName} (${p.email})</option>`).join('');
+}
+function dentistOptions(sel, activeOnly) {
+  let list = DentinAPI.getDentistsAdmin().data;
+  if (activeOnly) list = list.filter(x => x.active);
+  return list.map(x => `<option value="${x.id}" ${x.id===sel?'selected':''}>${x.fullName} · ${x.specialization}</option>`).join('');
+}
+function adminDelete(kind, id, label) {
+  if (!confirm(`Hapus ${label}?\nTindakan ini tidak bisa dibatalkan.`)) return;
+  const fn = { patient:'deletePatient', appt:'deleteAppointment', scan:'deleteScan', pres:'deletePrescription', dentist:'deleteDentist' }[kind];
+  const res = DentinAPI[fn](id);
+  if (!res.success) { toast(res.message, 'err'); return; }
+  toast('Data dihapus', 'ok'); renderAdmin();
+}
+function adminAddPatient() {
+  adminModal('Tambah Pasien', `
+    <div class="field-group"><label class="field-label">Nama lengkap</label><input class="field-input" id="npName"></div>
+    <div class="field-group"><label class="field-label">Email</label><input class="field-input" id="npEmail" type="email"></div>
+    <div class="field-group"><label class="field-label">Telepon</label><input class="field-input" id="npPhone"></div>
+    <div class="field-group"><label class="field-label">Gender</label>
+      <select class="field-input" id="npGender"><option value="">—</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+    <div class="field-group"><label class="field-label">Password login (opsional)</label><input class="field-input" id="npPass" type="text"></div>`,
+    ov => {
+      const name = ov.querySelector('#npName').value.trim(), email = ov.querySelector('#npEmail').value.trim();
+      if (!name || !email) { toast('Nama dan email wajib diisi', 'err'); return false; }
+      const res = DentinAPI.createPatient({ fullName:name, email, phone:ov.querySelector('#npPhone').value.trim(),
+        gender:ov.querySelector('#npGender').value||null, password:ov.querySelector('#npPass').value||null });
+      if (!res.success) { toast(res.message, 'err'); return false; }
+      toast('Pasien ditambahkan', 'ok'); renderAdmin();
+    }, 'Tambah');
+}
+function adminAddAppointment() {
+  if (!DentinAPI.getPatients().length) { toast('Tambah pasien dulu sebelum membuat janji temu', 'err'); return; }
+  adminModal('Tambah Janji Temu', `
+    <div class="field-group"><label class="field-label">Pasien</label><select class="field-input" id="naPatient">${patientOptions()}</select></div>
+    <div class="field-group"><label class="field-label">Dokter</label><select class="field-input" id="naDentist">${dentistOptions(null,true)}</select></div>
+    <div class="field-group"><label class="field-label">Tanggal</label><input class="field-input" type="date" id="naDate" min="${DentinAPI.todayStr()}"></div>
+    <div class="field-group"><label class="field-label">Jam</label><input class="field-input" type="time" id="naTime" value="10:00"></div>
+    <div class="field-group"><label class="field-label">Alasan (opsional)</label><input class="field-input" id="naReason"></div>`,
+    ov => {
+      const date = ov.querySelector('#naDate').value, time = ov.querySelector('#naTime').value;
+      if (!date || !time) { toast('Tanggal dan jam wajib diisi', 'err'); return false; }
+      const res = DentinAPI.createAppointment({ patientId:Number(ov.querySelector('#naPatient').value),
+        dentistId:Number(ov.querySelector('#naDentist').value), appointmentDate:date, appointmentTime:time,
+        reason:ov.querySelector('#naReason').value||null });
+      if (!res.success) { toast(res.message, 'err'); return false; }
+      toast('Janji temu ditambahkan', 'ok'); renderAdmin();
+    }, 'Tambah');
+}
+function adminAddDentist() {
+  adminModal('Tambah Dokter', `
+    <div class="field-group"><label class="field-label">Nama lengkap</label><input class="field-input" id="ndName" placeholder="Dr. ..."></div>
+    <div class="field-group"><label class="field-label">Spesialisasi</label><input class="field-input" id="ndSpec" placeholder="General Dentist · Checkups"></div>
+    <div class="field-group"><label class="field-label">Tipe</label>
+      <select class="field-input" id="ndType"><option value="general">General</option><option value="specialist">Specialist</option></select></div>
+    <div class="field-group"><label class="field-label">Pengalaman</label><input class="field-input" id="ndExp" placeholder="5 yrs"></div>
+    <div class="field-group"><label class="field-label">Email</label><input class="field-input" id="ndEmail" type="email"></div>
+    <div class="field-group"><label class="field-label">Telepon</label><input class="field-input" id="ndPhone"></div>`,
+    ov => {
+      const name = ov.querySelector('#ndName').value.trim();
+      if (!name) { toast('Nama dokter wajib diisi', 'err'); return false; }
+      const res = DentinAPI.createDentist({ fullName:name, specialization:ov.querySelector('#ndSpec').value.trim(),
+        type:ov.querySelector('#ndType').value, experience:ov.querySelector('#ndExp').value.trim(),
+        email:ov.querySelector('#ndEmail').value.trim(), phone:ov.querySelector('#ndPhone').value.trim() });
+      if (!res.success) { toast(res.message, 'err'); return false; }
+      toast('Dokter ditambahkan', 'ok'); renderAdmin();
+    }, 'Tambah');
+}
+function adminAddScan() {
+  if (!DentinAPI.getPatients().length) { toast('Tambah pasien dulu', 'err'); return; }
+  adminModal('Tambah Scan AI', `
+    <div class="field-group"><label class="field-label">Pasien</label><select class="field-input" id="nsPatient">${patientOptions()}</select></div>
+    <div class="field-group"><label class="field-label">Dokter (opsional)</label><select class="field-input" id="nsDentist"><option value="">—</option>${dentistOptions(null,false)}</select></div>
+    <p class="ec-sub" style="text-align:left;margin:4px 0 0;">Scan dibuat berstatus UPLOADED. Jalankan "Analisis AI" dari tabel untuk mendapatkan skor kesehatan.</p>`,
+    ov => {
+      const did = ov.querySelector('#nsDentist').value;
+      const res = DentinAPI.uploadScan(Number(ov.querySelector('#nsPatient').value), did ? Number(did) : null, []);
+      if (!res.success) { toast(res.message, 'err'); return false; }
+      toast('Scan ditambahkan', 'ok'); renderAdmin();
+    }, 'Tambah');
+}
+function adminAddPrescription() {
+  if (!DentinAPI.getPatients().length) { toast('Tambah pasien dulu', 'err'); return; }
+  adminModal('Tambah Resep (input manual)', `
+    <div class="field-group"><label class="field-label">Pasien</label><select class="field-input" id="nrPatient">${patientOptions()}</select></div>
+    <div class="field-group"><label class="field-label">Dokter</label><select class="field-input" id="nrDentist">${dentistOptions(null,false)}</select></div>
+    <div class="field-group"><label class="field-label">Diagnosis (opsional)</label><input class="field-input" id="nrDiag"></div>
+    <div class="field-group"><label class="field-label">Nama &amp; dosis obat</label><input class="field-input" id="nrMed" placeholder="cth. Chlorhexidine 0.2% mouthwash"></div>
+    <div class="field-group"><label class="field-label">Instruksi</label><input class="field-input" id="nrInstr" placeholder="cth. Kumur 10ml 2x sehari selama 14 hari"></div>
+    <div class="field-group"><label class="field-label">Catatan untuk pasien (opsional)</label><input class="field-input" id="nrNotes"></div>`,
+    ov => {
+      const med = ov.querySelector('#nrMed').value.trim(), instr = ov.querySelector('#nrInstr').value.trim();
+      if (!med || !instr) { toast('Nama obat dan instruksi wajib diisi', 'err'); return false; }
+      const res = DentinAPI.createPrescription({ patientId:Number(ov.querySelector('#nrPatient').value),
+        dentistId:Number(ov.querySelector('#nrDentist').value), diagnosis:ov.querySelector('#nrDiag').value.trim()||null,
+        medicationDetails:med, instructions:instr, notesToPatient:ov.querySelector('#nrNotes').value.trim()||null });
+      if (!res.success) { toast(res.message, 'err'); return false; }
+      toast('Resep dikirim ke pasien', 'ok'); renderAdmin();
+    }, 'Kirim Resep');
+}
+// One-time delegated delete handler (panel persists across re-renders)
+$('#adminPanel').addEventListener('click', e => {
+  const del = e.target.closest('[data-del-kind]'); if (!del) return;
+  adminDelete(del.dataset.delKind, Number(del.dataset.delId), del.dataset.delLabel || 'data ini');
+});
+
+/* ---------- Overview tab: recent activity across the clinic ---------- */
+function adminOverviewHTML(d) {
+  const recentAppts = [...d.appts].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
+  const recentScans = [...d.scans].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
+  const row = (t,s) => `<div class="status-row"><div class="status-ico" style="background:rgba(47,128,237,.1);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2.2"><path d="M5 12l4 4 10-10"/></svg></div>
+      <div class="status-txt"><div class="t1">${t}</div><div class="t2">${s}</div></div></div>`;
+  const medRow = p => {
+    const st = DentinAPI.getMedStats(p.id);
+    return `<div class="status-row"><div class="status-ico" style="background:${st.takenToday?'rgba(0,200,150,.16)':'rgba(242,201,78,.18)'};">
+        ${st.takenToday
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#019a76" stroke-width="2.4"><path d="M5 12l4 4 10-10"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9a7b0a" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>'}</div>
+      <div class="status-txt"><div class="t1">${adminPatientName(p.patientId)} — ${p.medicationDetails}</div>
+        <div class="t2">${st.takenToday ? 'Sudah diminum hari ini' : 'Belum diminum hari ini'} · ${st.totalDays} hari tercatat</div></div></div>`;
+  };
+  const activePres = [...d.pres].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt)).slice(0,6);
+  return `<p class="ec-sub" style="text-align:left;margin:0 0 16px;">Ringkasan menggabungkan seluruh data. Penambahan &amp; penghapusan dilakukan di masing-masing tab (Janji Temu, Pasien, Dokter, Scan AI, Resep).</p>
+  <div class="dash-grid" style="padding:0;">
+    <div class="card col-7"><div class="card-head"><div class="card-label">Janji Temu Terbaru</div></div>
+      ${recentAppts.length ? recentAppts.map(a => row(
+        `${adminPatientName(a.patientId)} → ${adminDentistName(a.dentistId)}`,
+        `${fmtApptDate(a.appointmentDate)} · ${a.appointmentTime} · ${a.status}`)).join('')
+        : '<div class="dt-empty">Belum ada janji temu tercatat.</div>'}</div>
+    <div class="card col-5"><div class="card-head"><div class="card-label">Scan AI Terbaru</div></div>
+      ${recentScans.length ? recentScans.map(s => row(
+        adminPatientName(s.patientId),
+        s.status === 'COMPLETED' ? `Skor ${s.aiAnalysisResult.overall_health_score}/100` : 'Menunggu analisis'))
+        .join('') : '<div class="dt-empty">Belum ada scan diunggah.</div>'}</div>
+    <div class="card col-12"><div class="card-head"><div class="card-label">Monitoring Obat (lapor pasien)</div></div>
+      ${activePres.length ? activePres.map(medRow).join('') : '<div class="dt-empty">Belum ada resep untuk dipantau.</div>'}</div>
+  </div>`;
+}
+
+/* ---------- Appointments tab ---------- */
+function adminAppointmentsHTML(d) {
+  const list = [...d.appts].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+  return `
+    <div class="admin-toolbar">
+      <div class="admin-search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="apptSearch" placeholder="Cari pasien atau dokter…"></div>
+      <button class="btn btn-primary" style="padding:9px 16px;font-size:13px;" onclick="adminAddAppointment()">+ Tambah Janji Temu</button>
+    </div>
+    <div class="table-card"><table class="data-table"><thead><tr>
+      <th>Pasien</th><th>Dokter</th><th>Tanggal &amp; Jam</th><th>Status</th><th>Aksi</th>
+    </tr></thead><tbody id="apptTbody">${list.map(apptRow).join('') || `<tr><td colspan="5" class="dt-empty">Belum ada janji temu.</td></tr>`}</tbody></table></div>`;
+}
+function apptRow(a) {
+  const p = DentinAPI.findPatient(a.patientId), doc = DentinAPI.findDentist(a.dentistId);
+  const statusBtns = a.status === 'CANCELLED' || a.status === 'COMPLETED' ? '' : `
+      ${a.status==='SCHEDULED' ? `<button class="dt-btn ok" data-appt-action="confirm" data-id="${a.id}">Konfirmasi</button>` : ''}
+      ${a.status==='CONFIRMED' ? `<button class="dt-btn pri" data-appt-action="progress" data-id="${a.id}">Mulai</button>` : ''}
+      ${a.status==='IN_PROGRESS' ? `<button class="dt-btn ok" data-appt-action="complete" data-id="${a.id}">Selesaikan</button>` : ''}
+      <button class="dt-btn danger" data-appt-action="cancel" data-id="${a.id}">Batalkan</button>`;
+  const actions = `<div class="dt-actions">${statusBtns}
+      <button class="dt-btn danger" data-del-kind="appt" data-del-id="${a.id}" data-del-label="janji temu ${p?.fullName||''}">Hapus</button></div>`;
+  return `<tr data-search="${(p?.fullName||'')+' '+(doc?.fullName||'')}">
+    <td><div class="dt-person"><div class="dt-avatar">${initials(p)||'?'}</div>
+      <div><div class="dt-name">${p?.fullName||'—'}</div><div class="dt-sub">${p?.phone||''}</div></div></div></td>
+    <td><div class="dt-name">${doc?.fullName||'—'}</div><div class="dt-sub">${doc?.specialization||''}</div></td>
+    <td>${fmtApptDate(a.appointmentDate)} · ${a.appointmentTime}</td>
+    <td><span class="status-badge ${a.status}">${a.status.replace('_',' ')}</span></td>
+    <td>${actions}</td></tr>`;
+}
+function wireAdminAppointments() {
+  const body = $('#apptTbody');
+  body.addEventListener('click', e => {
+    const btn = e.target.closest('[data-appt-action]'); if (!btn) return;
+    const id = btn.dataset.id, action = btn.dataset.apptAction;
+    const map = { confirm:'CONFIRMED', progress:'IN_PROGRESS', complete:'COMPLETED' };
+    const res = action === 'cancel' ? DentinAPI.cancelAppointment(id) : DentinAPI.updateAppointmentStatus(id, map[action]);
+    if (!res.success) { toast(res.message, 'err'); return; }
+    toast('Status janji temu diperbarui', 'ok'); renderAdmin();
+  });
+  const search = $('#apptSearch');
+  search?.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    $$('#apptTbody tr').forEach(tr => tr.style.display = (tr.dataset.search||'').toLowerCase().includes(q) ? '' : 'none');
+  });
+}
+
+/* ---------- Patients tab ---------- */
+function adminPatientsHTML(d) {
+  const list = d.patients;
+  const row = p => {
+    const apptCount = d.appts.filter(a=>a.patientId===p.id && a.status!=='CANCELLED').length;
+    const scanCount = d.scans.filter(s=>s.patientId===p.id).length;
+    return `<tr data-search="${p.fullName} ${p.email}">
+      <td><div class="dt-person"><div class="dt-avatar">${initials(p)}</div>
+        <div><div class="dt-name">${p.fullName}</div><div class="dt-sub">${p.email}</div></div></div></td>
+      <td>${p.phone||'—'}</td><td>${p.gender||'—'}</td>
+      <td>${apptCount} janji temu</td><td>${scanCount} scan</td>
+      <td>${new Date(p.createdAt).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}</td>
+      <td><button class="dt-btn danger" data-del-kind="patient" data-del-id="${p.id}" data-del-label="pasien ${p.fullName}">Hapus</button></td></tr>`;
+  };
+  return `
+    <div class="admin-toolbar">
+      <div class="admin-search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="patientSearch" placeholder="Cari nama atau email pasien…"></div>
+      <button class="btn btn-primary" style="padding:9px 16px;font-size:13px;" onclick="adminAddPatient()">+ Tambah Pasien</button>
+    </div>
+    <div class="table-card"><table class="data-table"><thead><tr>
+      <th>Pasien</th><th>Telepon</th><th>Gender</th><th>Riwayat</th><th>Scan</th><th>Terdaftar</th><th>Aksi</th>
+    </tr></thead><tbody id="patientTbody">${list.map(row).join('') || `<tr><td colspan="7" class="dt-empty">Belum ada pasien. Tambah lewat tombol di atas, atau lewat registrasi di Patient App.</td></tr>`}</tbody></table></div>`;
+}
+
+/* ---------- Dentists tab ---------- */
+function adminDentistsHTML(d) {
+  const row = doc => `<tr data-search="${doc.fullName} ${doc.specialization}">
+      <td><div class="dt-person"><div class="dt-avatar" style="background:linear-gradient(135deg,#${doc.color},#1B63C7);">${doc.initials}</div>
+        <div><div class="dt-name">${doc.fullName}</div><div class="dt-sub">${doc.specialization}</div></div></div></td>
+      <td>${doc.rating} ★ (${doc.reviews})</td><td>${doc.experience}</td>
+      <td><span class="status-badge ${doc.active?'active-yes':'active-no'}">${doc.active?'Aktif':'Nonaktif'}</span></td>
+      <td><div class="toggle-switch ${doc.active?'on':''}" data-dentist-toggle="${doc.id}" role="button" aria-label="Toggle status ${doc.fullName}"></div></td>
+      <td><button class="dt-btn danger" data-del-kind="dentist" data-del-id="${doc.id}" data-del-label="dokter ${doc.fullName}">Hapus</button></td></tr>`;
+  return `
+    <div class="admin-toolbar">
+      <div class="admin-search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="dentistSearch" placeholder="Cari nama atau spesialisasi…"></div>
+      <button class="btn btn-primary" style="padding:9px 16px;font-size:13px;" onclick="adminAddDentist()">+ Tambah Dokter</button>
+    </div>
+    <div class="table-card"><table class="data-table"><thead><tr>
+      <th>Dokter</th><th>Rating</th><th>Pengalaman</th><th>Status</th><th>Aktifkan</th><th>Aksi</th>
+    </tr></thead><tbody id="dentistTbody">${d.dentists.map(row).join('') || `<tr><td colspan="6" class="dt-empty">Belum ada dokter.</td></tr>`}</tbody></table></div>`;
+}
+function wireAdminDentists() {
+  $('#dentistTbody').addEventListener('click', e => {
+    const t = e.target.closest('[data-dentist-toggle]'); if (!t) return;
+    const id = Number(t.dataset.dentistToggle);
+    const isOn = t.classList.contains('on');
+    DentinAPI.setDentistActive(id, !isOn);
+    toast(!isOn ? 'Dokter diaktifkan' : 'Dokter dinonaktifkan', 'ok');
+    renderAdmin();
+  });
+  wireAdminSearch('dentists', adminData());
+}
+
+/* ---------- Scans tab ---------- */
+function adminScansHTML(d) {
+  const list = [...d.scans].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+  const row = s => `<tr>
+      <td><div class="dt-person"><div class="dt-avatar">${initials(DentinAPI.findPatient(s.patientId))||'?'}</div>
+        <div><div class="dt-name">${adminPatientName(s.patientId)}</div>
+        <div class="dt-sub">${new Date(s.createdAt).toLocaleDateString('id-ID',{day:'2-digit',month:'short'})}</div></div></div></td>
+      <td><span class="status-badge ${s.status}">${s.status}</span></td>
+      <td>${s.status==='COMPLETED'
+        ? `<div class="admin-score"><span class="dot" style="background:${s.aiAnalysisResult.overall_health_score>=80?'#00C896':s.aiAnalysisResult.overall_health_score>=60?'#F2C94C':'#EB5757'};"></span>${s.aiAnalysisResult.overall_health_score}/100</div>`
+        : '—'}</td>
+      <td>${s.status==='COMPLETED' ? (s.detectedIssues||'—') : '—'}</td>
+      <td><div class="dt-actions">
+        ${s.status!=='COMPLETED' ? `<button class="dt-btn pri" data-analyze="${s.id}">Jalankan Analisis AI</button>` : '<span class="dt-sub">Sudah dianalisis</span>'}
+        <button class="dt-btn danger" data-del-kind="scan" data-del-id="${s.id}" data-del-label="scan ${adminPatientName(s.patientId)}">Hapus</button>
+      </div></td></tr>`;
+  return `
+    <div class="admin-toolbar">
+      <div class="admin-search" style="visibility:hidden;"></div>
+      <button class="btn btn-primary" style="padding:9px 16px;font-size:13px;" onclick="adminAddScan()">+ Tambah Scan</button>
+    </div>
+    <div class="table-card"><table class="data-table"><thead><tr>
+      <th>Pasien</th><th>Status</th><th>Skor Kesehatan</th><th>Temuan</th><th>Aksi</th>
+    </tr></thead><tbody id="scanTbody">${list.map(row).join('') || `<tr><td colspan="5" class="dt-empty">Belum ada scan gigi.</td></tr>`}</tbody></table></div>`;
+}
+function wireAdminScans() {
+  $('#scanTbody')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-analyze]'); if (!btn) return;
+    btn.disabled = true; btn.textContent = 'Menganalisis…';
+    setTimeout(() => {
+      const res = DentinAPI.analyzeScan(btn.dataset.analyze);
+      if (!res.success) { toast(res.message, 'err'); return; }
+      toast('Analisis AI selesai — skor ' + res.data.aiAnalysisResult.overall_health_score, 'ok');
+      renderAdmin();
+    }, 900);
+  });
+}
+
+/* ---------- Prescriptions tab ---------- */
+function adminPrescriptionsHTML(d) {
+  const list = [...d.pres].sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+  const row = p => {
+    const st = DentinAPI.getMedStats(p.id);
+    const adher = `<div style="font-weight:700;">${st.totalDays} hari tercatat</div>
+      <div class="dt-sub" style="color:${st.takenToday?'#019a76':'#93A6BD'};font-weight:700;">
+        ${st.takenToday ? 'Sudah diminum hari ini ✓' : 'Belum diminum hari ini'}</div>
+      ${st.lastDay ? `<div class="dt-sub">Terakhir: ${st.lastDay}</div>` : ''}`;
+    return `<tr>
+      <td><div class="dt-person"><div class="dt-avatar">${initials(DentinAPI.findPatient(p.patientId))||'?'}</div>
+        <div><div class="dt-name">${adminPatientName(p.patientId)}</div><div class="dt-sub">oleh ${adminDentistName(p.dentistId)}</div></div></div></td>
+      <td>${p.medicationDetails}</td><td>${p.instructions}</td>
+      <td>${p.prescriptionDate}</td>
+      <td>${adher}</td>
+      <td><button class="dt-btn danger" data-del-kind="pres" data-del-id="${p.id}" data-del-label="resep ${adminPatientName(p.patientId)}">Hapus</button></td></tr>`;
+  };
+  return `
+    <div class="admin-toolbar">
+      <div class="admin-search" style="visibility:hidden;"></div>
+      <button class="btn btn-primary" style="padding:9px 16px;font-size:13px;" onclick="adminAddPrescription()">+ Tambah Resep (manual)</button>
+    </div>
+    <div class="table-card"><table class="data-table"><thead><tr>
+      <th>Pasien</th><th>Obat</th><th>Instruksi</th><th>Tanggal</th><th>Kepatuhan (lapor pasien)</th><th>Aksi</th>
+    </tr></thead><tbody>${list.map(row).join('') || `<tr><td colspan="6" class="dt-empty">Belum ada resep. Tambah lewat tombol di atas.</td></tr>`}</tbody></table></div>`;
+}
+
+/* ---------- Shared search-filter wiring for simple tables ---------- */
+function wireAdminSearch(kind, d) {
+  const ids = { patients:['patientSearch','patientTbody'], dentists:['dentistSearch','dentistTbody'] };
+  const [inputId, bodyId] = ids[kind] || [];
+  const input = inputId && $('#'+inputId); if (!input) return;
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    $$('#'+bodyId+' tr').forEach(tr => tr.style.display = (tr.dataset.search||'').toLowerCase().includes(q) ? '' : 'none');
+  });
+}
+
+/* ============================ 9. API CONSOLE ============================ */
+function renderApiConsole() {
+  const log = DentinAPI.getLog();
+  const cnt = $('#apiCount'); if (cnt) cnt.textContent = log.length;
+  const body = $('#apiLogBody'); if (!body) return;
+  body.innerHTML = log.length
+    ? log.map(e => `<div class="api-row"><span class="api-m ${e.method}">${e.method}</span>
+        <span class="api-path">${e.path}<span class="api-msg ${e.ok?'api-ok':'api-err'}">${e.ok?'200 · ':'400 · '}${e.message}</span></span></div>`).join('')
+    : `<div class="api-empty">No calls yet. Register, book a doctor, or run a scan — every action hits the Haackathon API and shows up here.</div>`;
+}
+
+/* ============================== 10. BOOT =============================== */
+document.addEventListener('DOMContentLoaded', () => {
+  bindLogin(); bindRegister();
+  DentinAPI.onLog(renderApiConsole);
+  renderApiConsole();
+
+  $('#apiFab').onclick = () => { $('#apiDrawer').classList.toggle('open'); renderApiConsole(); };
+  $('#apiClose').onclick = () => $('#apiDrawer').classList.remove('open');
+  $('#apiClear').onclick = () => DentinAPI.clearLog();
+
+  if (!location.hash) location.hash = '#/home';
+  route();
+});
+
+</script>
+</body>
+</html>
