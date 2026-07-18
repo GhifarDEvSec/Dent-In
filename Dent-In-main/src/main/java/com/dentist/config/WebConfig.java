@@ -18,4 +18,5 @@ public void addCorsMappings(CorsRegistry registry) {
         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         .allowedHeaders("*")
         .allowCredentials(true);
+ }
 }
