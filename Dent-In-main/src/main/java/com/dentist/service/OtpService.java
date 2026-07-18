@@ -2,6 +2,7 @@ package com.dentist.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,6 +25,9 @@ public class OtpService {
 
     private final JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
     public OtpService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -37,7 +41,14 @@ public class OtpService {
         String code = generateCode();
         otpStore.put(email + ":" + purpose, new OtpEntry(code, System.currentTimeMillis()));
 
-        sendViaEmail(email, code, purpose);
+        boolean sent = sendViaEmail(email, code, purpose);
+        if (!sent) {
+            log.warn("╔══════════════════════════════════════════╗");
+            log.warn("║  DEV MODE: OTP code for {}          ║", email);
+            log.warn("║  Code: {}  Purpose: {}           ║", code, purpose);
+            log.warn("║  (Gmail not configured — set MAIL_USERNAME/MAIL_PASSWORD in .env) ║");
+            log.warn("╚══════════════════════════════════════════╝");
+        }
         return code;
     }
 
@@ -56,7 +67,7 @@ public class OtpService {
         return ok;
     }
 
-    private void sendViaEmail(String email, String code, String purpose) {
+    private boolean sendViaEmail(String email, String code, String purpose) {
         try {
             String subject = switch (purpose) {
                 case "register" -> "Dent-In — Verify Your Email";
@@ -87,12 +98,14 @@ public class OtpService {
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(htmlBody, true);
-            helper.setFrom("Dent-In <noreply@dent-in.health>");
+            helper.setFrom("Dent-In <" + fromEmail + ">");
 
             mailSender.send(message);
             log.info("OTP email sent to {} (purpose={})", email, purpose);
+            return true;
         } catch (Exception e) {
-            log.error("Failed to send OTP email to {}: {}", email, e.getMessage());
+            log.warn("SMTP send failed for {}: {} (OTP still works in dev mode)", email, e.getMessage());
+            return false;
         }
     }
 
